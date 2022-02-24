@@ -48,4 +48,4 @@ if __name__ == "__main__":
         
         members = pd.concat([house_members, senate_members], axis=0).sort_values('id')
 
-        print(members)
+        # TODO: Connect to the MariaDB politicians table and put the data.
