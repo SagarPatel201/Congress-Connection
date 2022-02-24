@@ -1,6 +1,7 @@
 import requests
 from requests.auth import HTTPBasicAuth
 import pandas as pd
+import numpy as np
 import os
 
 if __name__ == "__main__":
@@ -37,7 +38,8 @@ if __name__ == "__main__":
         senate_members['district'] = ""
         
         # Add the ID
-        house_members['id'] = house_members['state'] + house_members['district']
+        # Some states have a district "At-Large" that represents the whole state. For those, we will use AL to denote it in the ID. 
+        house_members['id'] = house_members['state'] + np.where(house_members['district'] == 'At-Large', 'AL', house_members['district'])
         senate_members['id'] = senate_members['state'] + 'S' + senate_members.groupby('state').cumcount().add(1).astype(str)
 
         # Refine the columns to only what we need.
