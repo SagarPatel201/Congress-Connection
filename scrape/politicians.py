@@ -46,6 +46,6 @@ if __name__ == "__main__":
         house_members = house_members.loc[:, ['id', 'chamber', 'state', 'district', 'first_name', 'last_name', 'office', 'phone', 'contact_form',  'next_election']]
         senate_members = senate_members.loc[:, ['id', 'chamber', 'state', 'district', 'first_name', 'last_name', 'office', 'phone', 'contact_form', 'next_election']]
         
-        members = house_members.append(senate_members).sort_values('id')
+        members = pd.concat([house_members, senate_members], axis=0).sort_values('id')
 
         print(members)
