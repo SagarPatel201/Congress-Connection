@@ -1,5 +1,7 @@
-package com.example.demo.user;
+package com.congressconnection.conspring.service;
 
+import com.congressconnection.conspring.model.User;
+import com.congressconnection.conspring.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,14 +15,20 @@ public class UserService {
     private UserRepository userRepository;
 
     public List<User> getAllUsers() {
-        List<User> users = new ArrayList<>();
-        userRepository.findAll().forEach(users::add);
-        return users;
+        return userRepository.findAll();
     }
 
-//    public User getUser(String email) {
-//        return userRepository.findOne(email);
-//    }
+    public User getUserById(long id) {
+        return userRepository.findById(id).orElse(null);
+    }
+
+    public User getUserByUsername(String username) {
+        return userRepository.findByUsername(username).orElse(null);
+    }
+
+    public boolean existsByUsername(String username) {
+        return userRepository.existsByUsername(username);
+    }
 
     public void createUser(User user) {
         userRepository.save(user);
