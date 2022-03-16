@@ -13,5 +13,5 @@ public class User {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) long id;
     private String username;
     @JsonIgnore private String password;
-    private boolean admin;
+    private boolean isAdmin;
 }
