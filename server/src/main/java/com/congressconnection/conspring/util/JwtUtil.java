@@ -1,6 +1,6 @@
 package com.congressconnection.conspring.util;
 
-import com.congressconnection.conspring.model.MyUserDetails;
+import com.congressconnection.conspring.model.UserDetailsImpl;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -27,7 +27,7 @@ public class JwtUtil {
     }
 
     private Boolean isTokenExpired(String token) { return extractExpiration(token).before(new Date()); }
-    public String generateToken(MyUserDetails userDetails) {
+    public String generateToken(UserDetailsImpl userDetails) {
         Map<String, Object> claims = new HashMap<>();
         return createToken(claims, userDetails.getUsername());
     }
@@ -38,7 +38,7 @@ public class JwtUtil {
                 .signWith(SignatureAlgorithm.HS256, SECRET_KEY).compact();
     }
 
-    public Boolean validateToken(String token, MyUserDetails userDetails) {
+    public Boolean validateToken(String token, UserDetailsImpl userDetails) {
         final String username = extractUsername(token);
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
