@@ -1,7 +1,6 @@
 import React, {Component, useState, useEffect} from 'react';
 import CustomDrawer from "../components/CustomDrawer"
 import {json} from "../congressman.js"
-import './Table.css';
 import PoliticiansTable from '../components/PoliticiansTable';
 function Politicans() {
     const [error, setError] = useState(null);
@@ -15,7 +14,7 @@ function Politicans() {
         console.log(items);
     })*/
     useEffect(() => {
-        fetch("http://cs431-02.cs.rutgers.edu:8080/congressmen/all")
+        fetch("http://cs431-02.cs.rutgers.edu:8080/api/congressmen")
           .then(res => res.json())
           .then(
             (result) => {
