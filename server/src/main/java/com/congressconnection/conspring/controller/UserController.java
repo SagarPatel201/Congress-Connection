@@ -6,6 +6,7 @@ import com.congressconnection.conspring.model.UserDetailsImpl;
 import com.congressconnection.conspring.model.User;
 import com.congressconnection.conspring.service.UserDetailsServiceImpl;
 import com.congressconnection.conspring.util.JwtUtil;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -27,10 +28,27 @@ public class UserController {
     public ResponseEntity<List<User>> getUsers() {
         return ResponseEntity.ok().body(userDetailsService.getAllUsers());
     }
-    /*@GetMapping("/users")
-    public void createUser(@RequestBody User user) {
-        userService.createUser(user);
-    }*/
+
+    @PostMapping("/save")
+    public String saveUser(@RequestBody User user) {
+        if(userDetailsService.existsByUsername(user.getUsername())) { return "Username already exists"; }
+        if(user.getPassword() == null) { return "Password cannot be null"; }
+        userDetailsService.saveUser(user);
+        return "User saved";
+    }
+
+    @GetMapping("/user/{id}")
+    public User getUser(@PathVariable long id) {
+        return userDetailsService.getUserById(id);
+    }
+
+    @PutMapping("/user/{role}/{id}")
+    public String deactivateUser(@PathVariable String role, @PathVariable long id) {
+        User userToDeactivate = userDetailsService.getUserById(id);
+        if(!userToDeactivate.isActive()) { return "Unable to deactivate user: USER INACTIVE"; }
+        userDetailsService.disableUser(id);
+        return "Successfully disabled user: " + userToDeactivate;
+    }
 
     @RequestMapping("/test")
     public String testString() { return "test 123"; }
