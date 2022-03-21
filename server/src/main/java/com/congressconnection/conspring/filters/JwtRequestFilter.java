@@ -1,8 +1,7 @@
 package com.congressconnection.conspring.filters;
 
-import com.congressconnection.conspring.model.User;
 import com.congressconnection.conspring.model.UserDetailsImpl;
-import com.congressconnection.conspring.service.MyUserDetailsService;
+import com.congressconnection.conspring.service.UserDetailsServiceImpl;
 import com.congressconnection.conspring.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -21,7 +20,8 @@ import java.io.IOException;
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
 
-    @Autowired MyUserDetailsService userDetailsService;
+    @Autowired
+    UserDetailsServiceImpl userDetailsService;
     @Autowired JwtUtil jwtUtil;
 
     @Override

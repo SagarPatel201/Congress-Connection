@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class MyUserDetailsService implements UserDetailsService {
+public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
     UserRepository userRepository;
@@ -20,9 +20,7 @@ public class MyUserDetailsService implements UserDetailsService {
     @Override
     public UserDetailsImpl loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<User> user = userRepository.findByUsername(username);
-
-            user.orElseThrow(() -> new UsernameNotFoundException("No username found: " + username));
-
+        user.orElseThrow(() -> new UsernameNotFoundException("No username found: " + username));
         return user.map(UserDetailsImpl::new).get();
     }
 

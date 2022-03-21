@@ -4,8 +4,7 @@ import com.congressconnection.conspring.model.AuthenticationRequest;
 import com.congressconnection.conspring.model.AuthenticationResponse;
 import com.congressconnection.conspring.model.UserDetailsImpl;
 import com.congressconnection.conspring.model.User;
-import com.congressconnection.conspring.service.MyUserDetailsService;
-import com.congressconnection.conspring.service.UserService;
+import com.congressconnection.conspring.service.UserDetailsServiceImpl;
 import com.congressconnection.conspring.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -20,7 +19,7 @@ import java.util.List;
 public class UserController {
 
     @Autowired private AuthenticationManager authenticationManager;
-    @Autowired private MyUserDetailsService userDetailsService;
+    @Autowired private UserDetailsServiceImpl userDetailsService;
     @Autowired private JwtUtil jwtTokenUtil;
 
     @GetMapping("/users")

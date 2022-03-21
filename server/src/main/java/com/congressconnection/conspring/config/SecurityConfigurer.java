@@ -1,7 +1,7 @@
 package com.congressconnection.conspring.config;
 
 import com.congressconnection.conspring.filters.JwtRequestFilter;
-import com.congressconnection.conspring.service.MyUserDetailsService;
+import com.congressconnection.conspring.service.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,7 +18,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 
-    @Autowired private MyUserDetailsService userDetailsService;
+    @Autowired private UserDetailsServiceImpl userDetailsService;
     @Autowired private JwtRequestFilter jwtRequestFilter;
 
     @Override
