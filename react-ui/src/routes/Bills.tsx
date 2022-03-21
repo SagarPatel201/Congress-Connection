@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from './logo.svg';
 import Typography from '@mui/material/Typography';
 import { Link } from "react-router-dom";
 import CustomDrawer from "../components/CustomDrawer"
