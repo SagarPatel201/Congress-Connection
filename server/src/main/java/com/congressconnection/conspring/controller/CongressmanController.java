@@ -15,7 +15,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/api")
 public class CongressmanController {
     @Autowired
     CongressmanService congressmanService;

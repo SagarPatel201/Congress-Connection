@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 @RestController
+@RequestMapping("/login/")
 public class UserController {
 
     @Autowired private AuthenticationManager authenticationManager;
