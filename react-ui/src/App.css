@@ -1,4 +1,11 @@
 .App {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
   text-align: center;
 }
 
@@ -26,6 +33,17 @@
 
 .App-link {
   color: #61dafb;
+}
+
+.form {
+  max-width: 330px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  background: white;
+  padding: 60px;
+  margin-top: 70px;
+  color : black;
 }
 
 @keyframes App-logo-spin {

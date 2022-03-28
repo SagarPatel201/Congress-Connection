@@ -1,7 +1,33 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Typography from '@mui/material/Typography';
+import Login from './components/Login';
+import Signup from './components/Signup';
+import { Link,  useNavigate } from 'react-router-dom';
 
+function App() {
+  let navigate = useNavigate();
+
+  return (
+    <div className="App">
+      <Typography variant="h1" component="h2">
+        Congress Connection
+      </Typography>
+      <Typography variant="h4">
+        Description of Service Below the Title
+      </Typography>
+      <div className="form">
+        <Login navigate ={navigate}/>
+      </div>
+
+    </div>
+  );
+}
+
+
+export default App;
+
+/*
 function App() {
   return (
     <div className="App">
@@ -23,4 +49,19 @@ function App() {
   );
 }
 
-export default App;
+<div className="App">
+      <Typography variant="h1" component="h2">
+        Congress Connection
+      </Typography>
+      <Typography variant="h4">
+        Description of Service Below the Title
+      </Typography>
+      <div className = "form">
+        <Login />
+      </div>
+    
+    </div>
+
+
+
+*/
