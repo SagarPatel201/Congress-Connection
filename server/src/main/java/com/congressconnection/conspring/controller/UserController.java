@@ -49,4 +49,6 @@ public class UserController {
 
         return ResponseEntity.ok(new AuthenticationResponse(jwt));
     }
+
+    //TODO: add checkAdmin method
 }
