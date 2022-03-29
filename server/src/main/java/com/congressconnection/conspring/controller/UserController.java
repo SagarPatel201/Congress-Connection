@@ -10,6 +10,7 @@ import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +25,10 @@ public class UserController {
     @Autowired private AuthenticationManager authenticationManager;
     @Autowired private UserDetailsServiceImpl userDetailsService;
     @Autowired private JwtUtil jwtTokenUtil;
+    private final String USER_DISABLED = "User is disabled";
+    private final String INCORRECT_CREDENTIALS = "Incorrect username or password";
+    private final String USERNAME_EXISTS = "Username already exists";
+    private final String NULL_PASSWORD = "You must enter a password";
 
     @GetMapping("/users")
     public ResponseEntity<List<User>> getUsers() {
@@ -32,8 +37,8 @@ public class UserController {
 
     @PostMapping("/save")
     public String saveUser(@RequestBody User user) {
-        if(userDetailsService.existsByUsername(user.getUsername())) { return "Username already exists"; }
-        if(user.getPassword() == null) { return "Password cannot be null"; }
+        if(userDetailsService.existsByUsername(user.getUsername())) { return USERNAME_EXISTS; }
+        if(user.getPassword() == null) { return NULL_PASSWORD; }
         userDetailsService.saveUser(user);
         return "User saved";
     }
@@ -60,8 +65,11 @@ public class UserController {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(),
                     authenticationRequest.getPassword()));
         }
+        catch (DisabledException e) {
+            throw new Exception(USER_DISABLED, e);
+        }
         catch (BadCredentialsException e) {
-            throw new Exception("Incorrect username or password", e);
+            throw new Exception(INCORRECT_CREDENTIALS, e);
         }
         final UserDetailsImpl userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
         final String jwt = jwtTokenUtil.generateToken(userDetails);
