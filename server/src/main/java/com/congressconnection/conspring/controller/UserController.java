@@ -8,6 +8,7 @@ import com.congressconnection.conspring.service.UserDetailsServiceImpl;
 import com.congressconnection.conspring.util.JwtUtil;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
@@ -36,11 +37,13 @@ public class UserController {
     }
 
     @PostMapping("/save")
-    public String saveUser(@RequestBody User user) {
-        if(userDetailsService.existsByUsername(user.getUsername())) { return USERNAME_EXISTS; }
-        if(user.getPassword() == null) { return NULL_PASSWORD; }
+    public ResponseEntity<?> saveUser(@RequestBody User user) {
+        if(userDetailsService.existsByUsername(user.getUsername())) { return new ResponseEntity<>(USERNAME_EXISTS, HttpStatus.BAD_REQUEST); }
+        if(user.getPassword() == null || user.getPassword().isBlank()) { return new ResponseEntity<>(NULL_PASSWORD, HttpStatus.BAD_REQUEST); }
+        user.setActive(true);
+        user.setRoles("ROLE_USER");
         userDetailsService.saveUser(user);
-        return "User saved";
+        return new ResponseEntity<>("User saved successfully", HttpStatus.OK);
     }
 
     @GetMapping("/user/{id}")
