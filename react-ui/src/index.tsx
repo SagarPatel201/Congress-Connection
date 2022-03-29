@@ -10,6 +10,7 @@ import Favorites from "./routes/Favorites";
 import Politicans from "./routes/Politicians";
 import Bills from "./routes/Bills";
 import News from "./routes/News";
+import SignupRoute from "./routes/SignupRoute";
 const rootElement = document.getElementById("root");
 render(
   <BrowserRouter>
@@ -21,7 +22,7 @@ render(
       <Route path="bills" element={<Bills />} />
       <Route path="news" element={<News />} />
       <Route path="logout" element={<App />} />
-
+      <Route path="signup" element={<SignupRoute />} />
     </Routes>
   </BrowserRouter>,
   rootElement
