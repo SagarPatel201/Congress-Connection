@@ -1,5 +1,6 @@
 import React from 'react';
 import { Formik, Field, Form } from 'formik';
+import { Link } from 'react-router-dom';
 
 const Login = (props: any) => (
     <div>
@@ -49,7 +50,9 @@ const Login = (props: any) => (
                 <Field id="password" name="password" placeholder="Enter Password Here" type="password" />
 
                 <button type="submit">Submit</button>
-
+                <Link to ="/signup">
+                    <p>Create New Account</p>
+                </Link>
             </Form>
         </Formik>
     </div>
