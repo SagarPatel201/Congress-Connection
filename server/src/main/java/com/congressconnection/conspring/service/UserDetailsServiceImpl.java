@@ -48,4 +48,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         userRepository.delete(user);
     }
 
+    public static Boolean isAdmin(User user) {
+        return user.getRoles() == "admin";
+    }
+
 }
