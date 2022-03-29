@@ -20,10 +20,11 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 
     @Autowired private UserDetailsServiceImpl userDetailsService;
     @Autowired private JwtRequestFilter jwtRequestFilter;
+    //@Autowired private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
     @Override
     protected void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
-        authenticationManagerBuilder.userDetailsService(userDetailsService);
+        authenticationManagerBuilder.userDetailsService(userDetailsService).passwordEncoder(getPasswordEncoder());
     }
 
     @Override
@@ -34,10 +35,11 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 //                .antMatchers("/").permitAll()
 //                .and().formLogin();
         http.csrf().disable()
-                .authorizeRequests().antMatchers("/authenticate").permitAll()
-                .antMatchers("/test").authenticated()
-                .antMatchers("/").permitAll()
-                .and().sessionManagement()
+                .authorizeRequests().antMatchers("/login/authenticate").permitAll()
+                .antMatchers("/login/test/").authenticated()
+                .antMatchers("/").permitAll().and()
+                /*.exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and()*/
+                .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }
