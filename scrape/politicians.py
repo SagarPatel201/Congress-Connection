@@ -30,10 +30,6 @@ if __name__ == "__main__":
     house_members = pd.DataFrame(house_query.json()['results'][0]['members'])
     senate_members = pd.DataFrame(senate_query.json()['results'][0]['members'])
 
-    # Include only the members currently in office.
-    house_members = house_members.drop(house_members[house_members['in_office'] == False].index)
-    senate_members = senate_members.drop(senate_members[senate_members['in_office'] == False].index)
-
     # Add a few columns for what we need
     # Add the chamber because the two will be combined into one later.
     house_members['chamber'] = 'house'
@@ -48,10 +44,10 @@ if __name__ == "__main__":
     senate_members['id'] = senate_members['state'] + 'S' + senate_members.groupby('state').cumcount().add(1).astype(str)
 
     # Refine the columns to only what we need.
-    house_members = house_members.loc[:, ['id', 'chamber', 'state', 'district', 'first_name', 'last_name', 'office', 'phone', 'contact_form',  'next_election']]
-    senate_members = senate_members.loc[:, ['id', 'chamber', 'state', 'district', 'first_name', 'last_name', 'office', 'phone', 'contact_form', 'next_election']]
+    house_members = house_members.loc[:, ['id', 'chamber', 'state', 'district', 'first_name', 'last_name', 'in_office', 'office', 'phone', 'contact_form',  'next_election']]
+    senate_members = senate_members.loc[:, ['id', 'chamber', 'state', 'district', 'first_name', 'last_name', 'in_office', 'office', 'phone', 'contact_form',  'next_election']]
     
-    members = pd.concat([house_members, senate_members], axis=0).sort_values('id')
+    members = pd.concat([house_members, senate_members], axis=0).sort_values(['id', 'in_office'])
 
     # Rename some of the columns to match what our table should look like
     members = members.rename({'contact_form' : 'contact_link', 'office' : 'address', 'next_election' : 'reelection_date'}, axis=1)
@@ -74,8 +70,9 @@ if __name__ == "__main__":
 
     # Pandas doesn't support an "upsert" operation so we have to do it with sqlalchemy and mysql.
     politicians_table = Table('politicians', meta_data, autoload=True)
+    printed = False
     with engine.connect() as conn:
-        for (ID, chamber, state, district, first_name, last_name, address, phone, contact_link, reelection_date) in members.itertuples(index=False):
+        for (ID, chamber, state, district, first_name, last_name, in_office, address, phone, contact_link, reelection_date) in members.itertuples(index=False):
             insert_stmt = insert(politicians_table).values(
                 ID=ID,
                 chamber=chamber,
@@ -83,6 +80,7 @@ if __name__ == "__main__":
                 district=district,
                 first_name=first_name,
                 last_name=last_name,
+                in_office=in_office,
                 address=address,
                 phone=phone,
                 contact_link=contact_link,
@@ -92,6 +90,7 @@ if __name__ == "__main__":
             upsert_stmt = insert_stmt.on_duplicate_key_update(
                 first_name=first_name,
                 last_name=last_name,
+                in_office=in_office,
                 address=address,
                 phone=phone,
                 contact_link=contact_link,
