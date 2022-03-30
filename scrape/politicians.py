@@ -2,7 +2,8 @@ import requests
 from requests.auth import HTTPBasicAuth
 import pandas as pd
 import numpy as np
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, MetaData, Table, select, func
+from sqlalchemy.dialects.mysql import insert
 import pymysql
 import os
 import sys
@@ -55,20 +56,45 @@ if __name__ == "__main__":
     # Rename some of the columns to match what our table should look like
     members = members.rename({'contact_form' : 'contact_link', 'office' : 'address', 'next_election' : 'reelection_date'}, axis=1)
     
+    # Drop duplicate ids. This can happen when a congressman dies or retires.
+    members.drop_duplicates(['id'], keep='first', inplace=True)
+
     # Now we have to write the dataframe to the MariaDB table. 
 
     # Start by setting up the connection to the database.
     # This will use the conda environment to collect the login.
     user = os.environ.get('USER')
     passw = os.environ.get('PASS')
-    host = os.environ.get('HOST')
+    host = os.environ.get('DB_HOST')
     port = os.environ.get('PORT')
     db = os.environ.get('DB')
 
-    uri = f'mysql+pymysql://{user}:{passw}@{host}:{port}/{db}'
+    engine = create_engine(f'mysql+pymysql://{user}:{passw}@{host}:{port}/{db}')
+    meta_data = MetaData(bind=engine)
 
-    con = create_engine(uri)
+    # Pandas doesn't support an "upsert" operation so we have to do it with sqlalchemy and mysql.
+    politicians_table = Table('politicians', meta_data, autoload=True)
+    with engine.connect() as conn:
+        for (ID, chamber, state, district, first_name, last_name, address, phone, contact_link, reelection_date) in members.itertuples(index=False):
+            insert_stmt = insert(politicians_table).values(
+                ID=ID,
+                chamber=chamber,
+                state=state,
+                district=district,
+                first_name=first_name,
+                last_name=last_name,
+                address=address,
+                phone=phone,
+                contact_link=contact_link,
+                reelection_date=reelection_date
+            )
 
-    members.to_sql(name='politicians', con=con, if_exists='replace', index=False)
-
-    # Jake's comment
+            upsert_stmt = insert_stmt.on_duplicate_key_update(
+                first_name=first_name,
+                last_name=last_name,
+                address=address,
+                phone=phone,
+                contact_link=contact_link,
+                reelection_date=reelection_date,
+            )
+            conn.execute(upsert_stmt)
