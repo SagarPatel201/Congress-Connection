@@ -23,7 +23,7 @@ public class CongressmanController {
     public ResponseEntity<List<Congressman>> getCongressmen(
             @RequestParam Optional<String> state,
             @RequestParam Optional<String> chamber,
-            @RequestParam Optional<String> district
+            @RequestParam Optional<Integer> district
     ) {
         List<Congressman> congressmen = congressmanService
                 .listAll()
@@ -31,7 +31,7 @@ public class CongressmanController {
                 .filter(congressman ->
                         Objects.equals(congressman.getState(), state.orElse(congressman.getState())) &&
                         Objects.equals(congressman.getChamber(), chamber.orElse(congressman.getChamber())) &&
-                        Objects.equals(congressman.getDistrict(), district.orElse(congressman.getDistrict())))
+                        congressman.getDistrict() == district.orElse(congressman.getDistrict()))
                 .collect(Collectors.toList());
         return new ResponseEntity<>(congressmen, HttpStatus.OK);
     }
