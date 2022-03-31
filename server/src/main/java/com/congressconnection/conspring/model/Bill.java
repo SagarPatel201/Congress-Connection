@@ -3,14 +3,9 @@ package com.congressconnection.conspring.model;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.IdClass;
-import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -18,11 +13,21 @@ import java.util.Date;
 @Table(name = "bills")
 @IdClass(BillId.class)
 public class Bill {
-    @Id int billNumber;
-    public Date updateDate;
-    @Id public String billType;
-    public Date introducedDate;
-    public int congress;
-    public String title;
-    public String policyArea;
+    @Id @Column(name = "bill_number") private int billNumber;
+    @Column(name = "update_date") private Date updateDate;
+    @Column(name = "bill_type") @Id private String billType;
+    @Column(name = "introduced_date") private Date introducedDate;
+    @Column(name = "congress") private int congress;
+    @Column(name = "title") private String title;
+    @Column(name = "policy_area") private String policyArea;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+        name = "billcommittee",
+        joinColumns = {
+            @JoinColumn(name = "bill_type", referencedColumnName = "bill_type"),
+            @JoinColumn(name = "bill_number", referencedColumnName = "bill_number")
+        },
+        inverseJoinColumns = @JoinColumn(name = "committee_id", referencedColumnName = "id")
+    )
+    private List<Committee> referredToCommittees;
 }
