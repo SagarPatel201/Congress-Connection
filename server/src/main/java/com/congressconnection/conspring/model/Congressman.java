@@ -12,10 +12,11 @@ public class Congressman {
     private String chamber;
     private String state;
     private String district;
-    private String first_name;
-    private String last_name;
+    private String firstName;
+    private String lastName;
+    private boolean inOffice;
     private String address;
     private String phone;
-    private String contact_link;
-    private String reelection_date;
+    private String contactLink;
+    private String reelectionDate;
 }
