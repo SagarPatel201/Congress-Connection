@@ -35,12 +35,15 @@ if __name__ == "__main__":
     house_members['chamber'] = 'house'
     senate_members['chamber'] = 'senate'
 
-    # Add null district to the Senate for convenience later
-    senate_members['district'] = ""
+    # Add 0 district to the Senate and At-Large districts for convenience later
+    house_members.loc[house_members['district'] == 'At-Large', 'district'] = 0
+    senate_members['district'] = 0
     
-    # Add the ID
-    # Some states have a district "At-Large" that represents the whole state. For those, we will use AL to denote it in the ID. 
-    house_members['id'] = house_members['state'] + np.where(house_members['district'] == 'At-Large', 'AL', house_members['district'])
+    house_members['district'] = house_members['district'].astype(int)
+    senate_members['district'] = senate_members['district'].astype(int)
+
+    # Add the id
+    house_members['id'] = [''.join([str(s), str(d)]) for s, d in zip(house_members['state'], house_members['district']) ]
     senate_members['id'] = senate_members['state'] + 'S' + senate_members.groupby('state').cumcount().add(1).astype(str)
 
     # Refine the columns to only what we need.
@@ -72,9 +75,9 @@ if __name__ == "__main__":
     politicians_table = Table('politicians', meta_data, autoload=True)
     printed = False
     with engine.connect() as conn:
-        for (ID, chamber, state, district, first_name, last_name, in_office, address, phone, contact_link, reelection_date) in members.itertuples(index=False):
+        for (id, chamber, state, district, first_name, last_name, in_office, address, phone, contact_link, reelection_date) in members.itertuples(index=False):
             insert_stmt = insert(politicians_table).values(
-                ID=ID,
+                id=id,
                 chamber=chamber,
                 state=state,
                 district=district,
