@@ -1,5 +1,6 @@
 package com.congressconnection.conspring.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,5 +17,6 @@ public class Committee {
     private String chamber;
 
     @ManyToMany(mappedBy = "referredToCommittees")
+    @JsonIgnore
     private List<Bill> billsInCommittee;
 }
