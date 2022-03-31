@@ -87,8 +87,7 @@ with engine.connect() as conn:
             introduced_date=introduced_date,
             update_date=update_date,
             congress=congress,
-            policy_area=policy_area,
-            status='U'
+            policy_area=policy_area
         )
 
         conn.execute(bill_upsert_stmt)
@@ -101,16 +100,15 @@ with engine.connect() as conn:
             committee_chamber = item.find('chamber').text
             
             committee_insert_stmt = insert(committees_table).values(
-                ID=committee_system_code,
+                id=committee_system_code,
                 name=committee_name,
                 chamber=committee_chamber
             )
 
             committee_upsert_stmt = committee_insert_stmt.on_duplicate_key_update(
-                ID=committee_system_code,
+                id=committee_system_code,
                 name=committee_name,
-                chamber=committee_chamber,
-                status='U'
+                chamber=committee_chamber
             )
 
             conn.execute(committee_upsert_stmt)
@@ -125,8 +123,7 @@ with engine.connect() as conn:
             bc_upsert_stmt = bc_insert_stmt.on_duplicate_key_update(
                 bill_type=bill_type,
                 bill_number=bill_number,
-                committee_id=committee_system_code,
-                status='U'
+                committee_id=committee_system_code
             )
 
             conn.execute(bc_upsert_stmt)
@@ -139,14 +136,13 @@ with engine.connect() as conn:
             sponsor_state = item.find('state').text
             if bill_type == 'HR':
                 sponsor_district = item.find('district').text
-                if sponsor_district == '0': # 0 means at large
-                    sponsor_district = 'AL'
                 sponsor_id = sponsor_state + sponsor_district
+                consponsor_district = int(sponsor_district)
             else:
                 # This is a bad solution but its the best I've got.
                 # Lookup the id in the database using the state and last name of the sponsor.
                 sponsor_last_name = item.find('lastName').text
-                sponsor_select_stmt = select(politicians_table.c.ID).where(
+                sponsor_select_stmt = select(politicians_table.c.id).where(
                     politicians_table.c.state == sponsor_state and
                     politicians_table.c.last_name == sponsor_last_name
                 ).limit(1)
@@ -162,8 +158,7 @@ with engine.connect() as conn:
             sponsors_upsert_stmt = sponsors_insert_stmt.on_duplicate_key_update(
                 sponsor_id=sponsor_id,
                 bill_type=bill_type,
-                bill_number=bill_number,
-                status='U'
+                bill_number=bill_number
             )
 
             conn.execute(sponsors_upsert_stmt)
@@ -179,14 +174,13 @@ with engine.connect() as conn:
             cosponsor_state = item.find('state').text
             if bill_type == 'HR':
                 cosponsor_district = item.find('district').text
-                if cosponsor_district == '0': # 0 means at large
-                    cosponsor_district = 'AL'
                 cosponsor_id = cosponsor_state + cosponsor_district
+                consponsor_district = int(cosponsor_district)
             else:
                 # This is a bad solution but its the best I've got.
                 # Lookup the id in the database using the state and last name of the cosponsor.
                 cosponsor_last_name = item.find('lastName').text
-                cosponsor_select_stmt = select(politicians_table.c.ID).where(
+                cosponsor_select_stmt = select(politicians_table.c.id).where(
                     politicians_table.c.state == cosponsor_state and
                     politicians_table.c.last_name == cosponsor_last_name
                 ).limit(1)
@@ -206,8 +200,7 @@ with engine.connect() as conn:
                 bill_type=bill_type,
                 bill_number=bill_number,
                 cosponsorship_date=cosponsorship_date,
-                is_original=is_original_cosponsor,
-                status='U'
+                is_original=is_original_cosponsor
             )
 
             conn.execute(cosponsors_upsert_stmt)
