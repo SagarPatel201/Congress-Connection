@@ -1,6 +1,5 @@
 package com.congressconnection.conspring.util;
 
-import com.congressconnection.conspring.model.UserDetailsImpl;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
