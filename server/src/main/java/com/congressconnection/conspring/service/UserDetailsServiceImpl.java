@@ -30,17 +30,17 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         return userRepository.findById(id).orElse(null);
     }
 
-    public User getUserByUsername(String username) { return userRepository.findByUsername(username).orElse(null); }
-
     public boolean existsByUsername(String username) {
         return userRepository.existsByUsername(username);
     }
 
     public void saveUser(User user) { userRepository.save(user); }
 
+    public void activateUser(long id) { userRepository.getById(id).setActive(true);}
+
     public void disableUser(long id) { userRepository.getById(id).setActive(false); }
 
-    public void updateUser(String email, User user) {
+    public void updateUser(User user) {
         userRepository.save(user);
     }
 
