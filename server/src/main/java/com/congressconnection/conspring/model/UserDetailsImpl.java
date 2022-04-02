@@ -11,12 +11,14 @@ import java.util.stream.Collectors;
 
 public class UserDetailsImpl implements UserDetails {
 
+    private long id;
     private String username;
     private String password;
     private boolean active;
     private List<GrantedAuthority> authorities;
 
     public UserDetailsImpl(User user) {
+        this.id = user.getId();
         this.username = user.getUsername();
         this.password = user.getPassword();
         this.active = user.isActive();
@@ -27,6 +29,8 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() { return authorities; }
+
+    public long getId() { return id; }
 
     @Override
     public String getPassword() { return password; }
