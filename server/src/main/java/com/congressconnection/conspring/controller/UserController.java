@@ -93,7 +93,8 @@ public class UserController {
     public ResponseEntity<?> activateUser(@PathVariable long id) {
         User userToActivate = userDetailsService.getUserById(id);
         if(userToActivate.isActive()) { return new ResponseEntity<>("Unable to activate user: USER ACTIVE", HttpStatus.BAD_REQUEST); }
-        userDetailsService.activateUser(id);
+        userToActivate.setActive(true);
+        userDetailsService.disableUser(userToActivate);
         return new ResponseEntity<>("Successfully disabled user: " + userToActivate, HttpStatus.OK);
     }
 
@@ -102,8 +103,9 @@ public class UserController {
     public ResponseEntity<?> deactivateUser(@PathVariable long id) {
         User userToDeactivate = userDetailsService.getUserById(id);
         if(!userToDeactivate.isActive()) { return new ResponseEntity<>("Unable to deactivate user: USER INACTIVE", HttpStatus.BAD_REQUEST); }
-        userDetailsService.disableUser(id);
-        return new ResponseEntity<>("Successfully disabled user: " + userToDeactivate, HttpStatus.OK);
+        userToDeactivate.setActive(false);
+        userDetailsService.disableUser(userToDeactivate);
+        return new ResponseEntity<>("Successfully disabled user: \n" + userToDeactivate, HttpStatus.OK);
     }
 
     @PostMapping(value = "/authenticate")

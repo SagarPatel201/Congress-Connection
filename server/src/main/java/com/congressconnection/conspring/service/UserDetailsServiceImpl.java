@@ -36,12 +36,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     public void saveUser(User user) { userRepository.save(user); }
 
-    public void activateUser(long id) { userRepository.getById(id).setActive(true);}
+    public void activateUser(User user) { userRepository.saveAndFlush(user); }
 
-    public void disableUser(long id) { userRepository.getById(id).setActive(false); }
+    public void disableUser(User user) { userRepository.saveAndFlush(user); }
 
     public void updateUser(User user) {
-        userRepository.save(user);
+        userRepository.saveAndFlush(user);
     }
 
     public void deleteUser(User user) {
