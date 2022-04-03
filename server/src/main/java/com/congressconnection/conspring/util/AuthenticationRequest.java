@@ -1,4 +1,4 @@
-package com.congressconnection.conspring.model;
+package com.congressconnection.conspring.util;
 
 public class AuthenticationRequest {
     private String username;

@@ -1,8 +1,8 @@
 package com.congressconnection.conspring.controller;
 
-import com.congressconnection.conspring.model.AuthenticationRequest;
-import com.congressconnection.conspring.model.AuthenticationResponse;
-import com.congressconnection.conspring.model.UserDetailsImpl;
+import com.congressconnection.conspring.util.AuthenticationRequest;
+import com.congressconnection.conspring.util.AuthenticationResponse;
+import com.congressconnection.conspring.util.UserDetailsImpl;
 import com.congressconnection.conspring.model.User;
 import com.congressconnection.conspring.service.UserDetailsServiceImpl;
 import com.congressconnection.conspring.util.JwtUtil;

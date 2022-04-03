@@ -1,4 +1,4 @@
-package com.congressconnection.conspring.model;
+package com.congressconnection.conspring.util;
 
 import java.util.List;
 
