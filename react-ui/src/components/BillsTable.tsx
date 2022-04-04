@@ -1,6 +1,4 @@
 import * as React from 'react';
-import {ForwardedRef, forwardRef, PropsWithChildren} from "react";
-
 import AddBox from '@material-ui/icons/AddBox';
 import ArrowDownward from '@material-ui/icons/ArrowDownward';
 import Check from '@material-ui/icons/Check';
@@ -17,6 +15,7 @@ import SaveAlt from '@material-ui/icons/SaveAlt';
 import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
 import MaterialTable from "material-table";
+import {ForwardedRef, forwardRef, PropsWithChildren} from "react";
 
 const tableIcons = {
     Check: forwardRef((props: PropsWithChildren<{}>, ref: ForwardedRef<any>)=> <Check {...props} ref={ref} />),
@@ -33,30 +32,22 @@ const tableIcons = {
     SortArrow: forwardRef((props: PropsWithChildren<{}>, ref: ForwardedRef<any>) => <ArrowDownward {...props} ref={ref} />),
     ViewColumn: forwardRef((props: PropsWithChildren<{}>, ref: ForwardedRef<any>) => <ViewColumn {...props} ref={ref} />)
   };
-  
-
-
-const PoliticiansTable = (props: any) => {
+const BillsTable = (props: any) => {
     return (
         <div>
             <MaterialTable
                 columns = {[
-                    { title: "First Name", field: "firstName" },
-                    { title: "Last Name", field: "lastName" },
-                    { title: "Chamber", field: "chamber" },
-                    { title: "Address", field: "address" },
-                    { title: "State", field: "state" },
-                    { title: "Phone", field: "phone"},
-                    { title: "Re-Election Date", field: "reelectionDate" },
-                    { title: "Contact Link", field: "contactLink" },
+                    { title: "Bill Number", field: "billNumber" },
+                    { title: "Bill Title", field: "title" },
+                    { title: "Bill Type", field: "billType" },
                 ]}
                 data = {props.rows}
-                title = "United States Congressmen"
-                icons= {tableIcons}
+                title = "United States Bills"
+                icons={tableIcons}
             >
             </MaterialTable>
         </div>
     )
 }
 
-export default PoliticiansTable;
+export default BillsTable;
