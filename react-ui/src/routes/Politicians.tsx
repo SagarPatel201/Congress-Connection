@@ -1,3 +1,4 @@
+import {Box, Paper} from '@mui/material';
 import React, {useState, useEffect} from 'react';
 import CustomDrawer from "../components/CustomDrawer"
 import PoliticiansTable from '../components/PoliticiansTable';
@@ -5,13 +6,6 @@ function Politicans() {
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [items, setItems] = useState([]);
-    /* Testing Locally
-    useEffect(() => {
-        setError(null)
-        setIsLoaded(true);
-        setItems(json);
-        console.log(items);
-    })*/
     useEffect(() => {
         fetch("http://cs431-02.cs.rutgers.edu:8080/api/congressmen")
           .then(res => res.json())
@@ -26,9 +20,6 @@ function Politicans() {
               setError(error);
             }
           )
-          /*fetch('http://cs431-02.cs.rutgers.edu:8080/congressmen/all')
-            .then(response => response.json())
-            .then(data => console.log(data));*/
       }, [])
       
     if (error){
@@ -43,7 +34,11 @@ function Politicans() {
         return(
             <div className = "Table">
                 <CustomDrawer />
+                <Box
+                    paddingLeft = {30}
+                >
                 <PoliticiansTable rows = {items} />
+                    </Box>
             </div>
         )
     }
