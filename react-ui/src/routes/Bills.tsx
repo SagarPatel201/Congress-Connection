@@ -1,22 +1,14 @@
 import React, {useState, useEffect} from 'react';
-import Typography from '@mui/material/Typography';
-import { Link } from "react-router-dom";
 import CustomDrawer from "../components/CustomDrawer"
 import BillsTable from '../components/BillsTable';
 import { fetchPaginate } from "fetch-paginate";
+import {Box} from "@mui/material";
 
 function Bills() {
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [items, setItems] = useState([]);
     
-    /* Testing Locally
-    useEffect(() => {
-        setError(null)
-        setIsLoaded(true);
-        setItems(json);
-        console.log(items);
-    })*/
     useEffect(() => {
         fetch("http://cs431-02.cs.rutgers.edu:8080/api/bills/all?pageNumber=0&pageSize=100")
           .then(res => res.json())
@@ -31,9 +23,6 @@ function Bills() {
               setError(error);
             }
           )
-          /*fetch('http://cs431-02.cs.rutgers.edu:8080/congressmen/all')
-            .then(response => response.json())
-            .then(data => console.log(data));*/
       }, [])
       
     if (error){
@@ -48,7 +37,11 @@ function Bills() {
         return(
             <div className = "Table">
                 <CustomDrawer />
-                <BillsTable rows = {items} />
+                <Box
+                    paddingLeft={30}
+                >
+                    <BillsTable rows = {items} />
+                </Box>
             </div>
         )
     }
