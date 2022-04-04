@@ -21,7 +21,6 @@ render(
       <Route path="bills" element={<Bills />} />
       <Route path="news" element={<News />} />
       <Route path="logout" element={<App />} />
-
     </Routes>
   </BrowserRouter>,
   rootElement
