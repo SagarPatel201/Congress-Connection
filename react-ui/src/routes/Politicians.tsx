@@ -2,6 +2,7 @@ import {Box, Paper} from '@mui/material';
 import React, {useState, useEffect} from 'react';
 import CustomDrawer from "../components/CustomDrawer"
 import PoliticiansTable from '../components/PoliticiansTable';
+
 function Politicans() {
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
