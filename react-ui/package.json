@@ -24,7 +24,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "GENERATE_SOURCEMAP=false react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -48,6 +48,8 @@
     ]
   },
   "devDependencies": {
+    "material-table": "^1.69.3",
+    "react-double-scrollbar": "^0.0.15",
     "yup": "^0.32.11"
   }
 }

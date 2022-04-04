@@ -1,6 +1,5 @@
-import React, {Component, useState, useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import CustomDrawer from "../components/CustomDrawer"
-import {json} from "../congressman.js"
 import PoliticiansTable from '../components/PoliticiansTable';
 function Politicans() {
     const [error, setError] = useState(null);
