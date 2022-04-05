@@ -50,4 +50,10 @@ public class UserController {
 
         return ResponseEntity.ok(new AuthenticationResponse(jwt));
     }
+
+    
+    public ResponseEntity<> isAdmin(User user) {
+        return new ResponseEntity<>(UserDetailsServiceImpl.isAdmin(user), HttpStatus.OK);
+    }
+
 }
