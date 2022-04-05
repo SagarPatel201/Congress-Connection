@@ -1,12 +1,11 @@
 package com.congressconnection.conspring.controller;
 
-import com.congressconnection.conspring.model.AuthenticationRequest;
-import com.congressconnection.conspring.model.AuthenticationResponse;
-import com.congressconnection.conspring.model.UserDetailsImpl;
+import com.congressconnection.conspring.util.AuthenticationRequest;
+import com.congressconnection.conspring.util.AuthenticationResponse;
+import com.congressconnection.conspring.util.UserDetailsImpl;
 import com.congressconnection.conspring.model.User;
 import com.congressconnection.conspring.service.UserDetailsServiceImpl;
 import com.congressconnection.conspring.util.JwtUtil;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -14,6 +13,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
@@ -123,7 +123,7 @@ public class UserController {
         final UserDetailsImpl userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
         final String jwt = jwtTokenUtil.generateToken(userDetails);
         List<String> roles = userDetails.getAuthorities().stream()
-                .map(item -> item.getAuthority())
+                .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList());
 //        System.out.println(userDetails.getId() + "\n" +
 //                            userDetails.getUsername() + "\n" +
