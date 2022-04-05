@@ -77,6 +77,7 @@ const LoginForm = (props: any) => {
                             fullWidth
                             label="Password"
                             name="password"
+                            type="password"
                             value={formik.values.password}
                             onChange={formik.handleChange}
                             error={formik.touched.password && Boolean(formik.errors.password)}
