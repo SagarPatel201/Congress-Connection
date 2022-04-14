@@ -7,13 +7,13 @@ const validationSchema = yup.object({
     username: yup
         .string()
         .required('Username is required'),
-    password: yup
+    password1: yup
         .string()
         .required('Password is required'),
     password2: yup
         .string()
         .required('Password is required')
-        .oneOf([yup.ref('password'), null], 'Passwords must match')
+        .oneOf([yup.ref('password1'), null], 'Passwords must match')
 });
 
 const SignUpForm = () => {
@@ -72,10 +72,10 @@ const SignUpForm = () => {
                         <TextField fullWidth label="Username" name="username" onChange={formik.handleChange} />
                     </Grid>
                     <Grid item xs={12}>
-                        <TextField fullWidth label="Password" name="password" onChange={formik.handleChange} />
+                        <TextField fullWidth label="Password" name="password1" onChange={formik.handleChange} />
                     </Grid>
                     <Grid item xs={12}>
-                        <TextField fullWidth label="Confirm Password" name="confirm-password" onChange={formik.handleChange} />
+                        <TextField fullWidth label="Confirm Password" name="password2" onChange={formik.handleChange} />
                     </Grid>
                     <Grid item >
                         <Button type="submit" variant="contained" color="primary">Sign Up</Button>

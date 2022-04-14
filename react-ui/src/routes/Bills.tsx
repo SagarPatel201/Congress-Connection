@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import CustomDrawer from "../components/CustomDrawer"
-import BillsTable from '../components/BillsTable';
+import BillsTable from '../components/BillsTable.jsx';
 import { fetchPaginate } from "fetch-paginate";
 import {Box} from "@mui/material";
 
@@ -40,7 +40,7 @@ function Bills() {
                 <Box
                     paddingLeft={30}
                 >
-                    <BillsTable rows = {items} />
+                    <BillsTable />
                 </Box>
             </div>
         )
