@@ -55,6 +55,7 @@ const PoliticiansTable = (props: any) => {
                     { title: "Phone", field: "phone"},
                     { title: "Re-Election Date", field: "reelectionDate" },
                     { title: "Contact Link", field: "contactLink" },
+                    { title: "Party", field: "party" },
                 ]}
                 data = {props.rows}
                 title = "United States Congressmen"
