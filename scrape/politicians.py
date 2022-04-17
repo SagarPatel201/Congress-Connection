@@ -47,8 +47,8 @@ if __name__ == "__main__":
     senate_members['id'] = senate_members['state'] + 'S' + senate_members.groupby('state').cumcount().add(1).astype(str)
 
     # Refine the columns to only what we need.
-    house_members = house_members.loc[:, ['id', 'chamber', 'state', 'district', 'first_name', 'last_name', 'in_office', 'office', 'phone', 'contact_form',  'next_election']]
-    senate_members = senate_members.loc[:, ['id', 'chamber', 'state', 'district', 'first_name', 'last_name', 'in_office', 'office', 'phone', 'contact_form',  'next_election']]
+    house_members = house_members.loc[:, ['id', 'chamber', 'state', 'district', 'party', 'first_name', 'last_name', 'in_office', 'office', 'phone', 'contact_form',  'next_election']]
+    senate_members = senate_members.loc[:, ['id', 'chamber', 'state', 'district', 'party', 'first_name', 'last_name', 'in_office', 'office', 'phone', 'contact_form',  'next_election']]
     
     members = pd.concat([house_members, senate_members], axis=0).sort_values(['id', 'in_office'])
 
@@ -75,12 +75,13 @@ if __name__ == "__main__":
     politicians_table = Table('politicians', meta_data, autoload=True)
     printed = False
     with engine.connect() as conn:
-        for (id, chamber, state, district, first_name, last_name, in_office, address, phone, contact_link, reelection_date) in members.itertuples(index=False):
+        for (id, chamber, state, district, party, first_name, last_name, in_office, address, phone, contact_link, reelection_date) in members.itertuples(index=False):
             insert_stmt = insert(politicians_table).values(
                 id=id,
                 chamber=chamber,
                 state=state,
                 district=district,
+                party=party,
                 first_name=first_name,
                 last_name=last_name,
                 in_office=in_office,
@@ -91,6 +92,7 @@ if __name__ == "__main__":
             )
 
             upsert_stmt = insert_stmt.on_duplicate_key_update(
+                party=party,
                 first_name=first_name,
                 last_name=last_name,
                 in_office=in_office,
