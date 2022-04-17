@@ -49,13 +49,13 @@ const PoliticiansTable = (props: any) => {
                     { title: "Chamber", field: "chamber" },
                     { title: "State", field: "state" },
                     { title: "District", field: "district"},
+                    { title: "Party", field: "party" },
                     { title: "First Name", field: "firstName" },
                     { title: "Last Name", field: "lastName" },
                     { title: "Address", field: "address" },
                     { title: "Phone", field: "phone"},
                     { title: "Re-Election Date", field: "reelectionDate" },
                     { title: "Contact Link", field: "contactLink" },
-                    { title: "Party", field: "party" },
                 ]}
                 data = {props.rows}
                 title = "United States Congressmen"
