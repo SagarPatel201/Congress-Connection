@@ -1,4 +1,7 @@
 package com.congressconnection.conspring.service;
+import com.congressconnection.conspring.enums.Chamber;
+import com.congressconnection.conspring.enums.Party;
+import com.congressconnection.conspring.enums.State;
 import com.congressconnection.conspring.model.Congressman;
 import com.congressconnection.conspring.repository.CongressmanRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +24,7 @@ public class CongressmanService {
         return congressmanRepository.findById(id).orElse(null);
     }
 
-    public List<Congressman> getByState(String state) {
+    public List<Congressman> getByState(State state) {
         return congressmanRepository
                 .findAll()
                 .stream()
@@ -29,11 +32,19 @@ public class CongressmanService {
                 .collect(Collectors.toList());
     }
 
-    public List<Congressman> getByChamber(String chamber) {
+    public List<Congressman> getByChamber(Chamber chamber) {
         return congressmanRepository
                 .findAll()
                 .stream()
                 .filter(congressman -> Objects.equals(congressman.getChamber(), chamber))
+                .collect(Collectors.toList());
+    }
+
+    public List<Congressman> getByParty(Party party) {
+        return congressmanRepository
+                .findAll()
+                .stream()
+                .filter(congressman -> Objects.equals(congressman.getParty(), party))
                 .collect(Collectors.toList());
     }
 }

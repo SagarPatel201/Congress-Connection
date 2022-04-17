@@ -1,6 +1,7 @@
 package com.congressconnection.conspring.controller;
 
 import com.congressconnection.conspring.enums.Chamber;
+import com.congressconnection.conspring.enums.Party;
 import com.congressconnection.conspring.enums.State;
 import com.congressconnection.conspring.model.Congressman;
 import com.congressconnection.conspring.service.CongressmanService;
@@ -27,13 +28,15 @@ public class CongressmanController {
     public ResponseEntity<List<Congressman>> getCongressmen(
             @RequestParam Optional<State> state,
             @RequestParam Optional<Chamber> chamber,
-            @RequestParam Optional<Integer> district
+            @RequestParam Optional<Integer> district,
+            @RequestParam Optional<Party> party
     ) {
         List<Congressman> congressmen = congressmanService
                 .listAll()
                 .stream()
                 .filter(congressman ->
                         Objects.equals(congressman.getState(), state.orElse(congressman.getState())) &&
+                        Objects.equals(congressman.getParty(), party.orElse(congressman.getParty())) &&
                         Objects.equals(congressman.getChamber(), chamber.orElse(congressman.getChamber())) &&
                         congressman.getDistrict() == district.orElse(congressman.getDistrict()))
                 .collect(Collectors.toList());

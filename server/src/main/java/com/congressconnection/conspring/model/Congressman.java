@@ -1,5 +1,6 @@
 package com.congressconnection.conspring.model;
 import com.congressconnection.conspring.enums.Chamber;
+import com.congressconnection.conspring.enums.Party;
 import com.congressconnection.conspring.enums.State;
 import lombok.Getter;
 
@@ -13,6 +14,7 @@ public class Congressman {
     @Column(name = "chamber") @Enumerated(EnumType.STRING) private Chamber chamber;
     @Column(name = "state") @Enumerated(EnumType.STRING) private State state;
     @Column(name = "district") private int district;
+    @Column(name = "party") @Enumerated(EnumType.STRING) private Party party;
     @Column(name = "first_name") private String firstName;
     @Column(name = "last_name") private String lastName;
     @Column(name = "in_office") private boolean inOffice;
