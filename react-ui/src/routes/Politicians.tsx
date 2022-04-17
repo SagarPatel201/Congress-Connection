@@ -3,7 +3,7 @@ import React, {useState, useEffect} from 'react';
 import CustomDrawer from "../components/CustomDrawer"
 import PoliticiansTable from '../components/PoliticiansTable';
 
-function Politicans() {
+function Politicians() {
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [items, setItems] = useState([]);
@@ -44,4 +44,4 @@ function Politicans() {
         )
     }
 }
-export default Politicans;
+export default Politicians;

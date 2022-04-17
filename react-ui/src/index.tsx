@@ -7,7 +7,7 @@ import {
 import App from "./App";
 import Homepage from "./routes/Homepage";
 import Favorites from "./routes/Favorites";
-import Politicans from "./routes/Politicians";
+import Politicians from "./routes/Politicians";
 import Bills from "./routes/Bills";
 import News from "./routes/News";
 const rootElement = document.getElementById("root");
@@ -17,7 +17,7 @@ render(
       <Route path="/" element={<App />} />
       <Route path="home" element={<Homepage />} />
       <Route path="favorites" element={<Favorites />} />
-      <Route path="politicans" element={<Politicans />} />
+      <Route path="politicians" element={<Politicians />} />
       <Route path="bills" element={<Bills />} />
       <Route path="news" element={<News />} />
       <Route path="logout" element={<App />} />
