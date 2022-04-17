@@ -29,8 +29,8 @@ dependencies {
 	implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
 	// https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api
 	implementation group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.0'
-
-
+	// https://mvnrepository.com/artifact/org.junit/junit5-engine
+	implementation group: 'org.junit', name: 'junit5-engine', version: '5.0.0-ALPHA'
 }
 
 tasks.named('test') {
