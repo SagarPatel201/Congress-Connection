@@ -38,7 +38,7 @@ const tableIcons = {
     ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />)
   };;
 
-  function makeFetch(requestOptions: any){
+  function makeFetch(requestOptions){
     fetch('http://cs431-02.cs.rutgers.edu:8080/favorites/bill', requestOptions)
     .then(async response => {
         const validJSON = response.headers.get('content-type')?.includes('application/json');

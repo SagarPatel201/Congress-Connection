@@ -41,6 +41,8 @@ const tableIcons = {
 const columns = [
     { title: "Bill Number", field: "billNumber" },
     { title: "Bill Type", field: "billType" },
+    { title: "Bill Title", field: "title" },
+
 ]
 function BillsTable(props: any){
       return (
