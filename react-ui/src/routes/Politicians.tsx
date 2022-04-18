@@ -1,9 +1,7 @@
-import {Box, Paper} from '@mui/material';
 import React, {useState, useEffect} from 'react';
-import CustomDrawer from "../components/CustomDrawer"
 import PoliticiansTable from '../components/PoliticiansTable';
 
-function Politicans() {
+function Politicians() {
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [items, setItems] = useState([]);
@@ -31,17 +29,12 @@ function Politicans() {
         return(
             <p>Loading JSON results</p>
         )
-    }else{
+    } else{
         return(
-            <div className = "Table">
-                <CustomDrawer />
-                <Box
-                    paddingLeft = {30}
-                >
+            <div>
                 <PoliticiansTable rows = {items} />
-                    </Box>
             </div>
         )
     }
 }
-export default Politicans;
+export default Politicians;

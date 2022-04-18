@@ -40,8 +40,7 @@ const LoginForm = (props: any) => {
                         return Promise.reject(error);
                     }
                     if(response.status === 200){
-                        console.log("ASDF")
-                        props.navigate('/home');
+                        props.onSuccess();
                     }else{
                         alert("Invalid Login")
                     }

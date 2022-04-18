@@ -1,11 +1,11 @@
 import React from 'react';
-import Login from "./routes/Login";
 import './App.css';
+import Homepage from "./routes/Homepage";
 
 function App() {
     return (
         <div>
-            <Login />
+            <Homepage />
         </div>
     )
 }

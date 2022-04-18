@@ -36,7 +36,6 @@ function Bills() {
     }else{
         return(
             <div className = "Table">
-                <CustomDrawer />
                 <Box
                     paddingLeft={30}
                 >

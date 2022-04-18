@@ -42,7 +42,7 @@ function drawer() {
           <Toolbar />
           <Divider />
           <List>
-            {['Home', 'Favorites', 'Politicans', 'Bills', 'News', 'Logout'].map((text) => (
+            {['Home', 'Favorites', 'Politicians', 'Bills', 'News', 'Logout'].map((text) => (
               <Link to={`/${text}`} style={{ textDecoration: 'none' }}>
                 <ListItem button key={text}>
                   <ListItemIcon>

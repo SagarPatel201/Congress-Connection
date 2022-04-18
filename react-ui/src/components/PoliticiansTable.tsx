@@ -38,8 +38,6 @@ const tableIcons = {
     ViewColumn: forwardRef((props: PropsWithChildren<{}>, ref: ForwardedRef<any>) => <ViewColumn {...props} ref={ref} />)
 };
 
-
-
 const PoliticiansTable = (props: any) => {
     return (
         <div>

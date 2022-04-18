@@ -16,7 +16,7 @@ const validationSchema = yup.object({
         .oneOf([yup.ref('password1'), null], 'Passwords must match')
 });
 
-const SignUpForm = () => {
+const SignUpForm = (props : {onSuccess: () => void}) => {
     const formik = useFormik({
         initialValues: {
             username: '',
@@ -43,12 +43,11 @@ const SignUpForm = () => {
                         const error = (data && data.message) || response.status;
                         return Promise.reject(error);
                     }
-                    if(response.status === 200){
-                        console.log(response)
-                        alert("Success, your account was created!")
-                    }else if(response.status === 409){
+                    if (response.status === 200){
+                        props.onSuccess();
+                    } else if (response.status === 409){
                         alert("Account Already Exists!")
-                    }else{
+                    } else{
                         alert("Account Creation Failed")
                     }
                 })
