@@ -59,9 +59,6 @@ function drawer() {
           sx={{ flexGrow: 1, bgcolor: 'background.default', p: 3 }}
         >
           <Toolbar />
-          <Typography paragraph>
-            Welcome Back
-          </Typography>
         </Box>
       </Box>
   );

@@ -41,6 +41,8 @@ const LoginForm = (props: any) => {
                     }
                     if(response.status === 200){
                         console.log("ASDF")
+                        localStorage.setItem('JWT', data['jwt'])
+                        localStorage.setItem('ID', data['id'])
                         props.navigate('/home');
                     }else{
                         alert("Invalid Login")

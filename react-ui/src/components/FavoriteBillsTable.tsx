@@ -17,8 +17,6 @@ import Remove from '@material-ui/icons/Remove';
 import SaveAlt from '@material-ui/icons/SaveAlt';
 import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
-import StarOutlineIcon from '@mui/icons-material/StarOutline';
-import Save from '@material-ui/icons/Save';
 
 const tableIcons = {
     Add: forwardRef((props: PropsWithChildren<{}>, ref: ForwardedRef<any>) => <AddBox {...props} ref={ref}/>),
@@ -40,85 +38,26 @@ const tableIcons = {
     ViewColumn: forwardRef((props: PropsWithChildren<{}>, ref: ForwardedRef<any>) => <ViewColumn {...props} ref={ref} />)
 };
 
-
-function makeFetch(requestOptions: any){
-    fetch('http://cs431-02.cs.rutgers.edu:8080/favorites/politician', requestOptions)
-    .then(async response => {
-        const validJSON = response.headers.get('content-type')?.includes('application/json');
-        const data = validJSON && await response.json();
-        console.log(data)
-        if (!response.ok) {
-            const error = (data && data.message) || response.status;
-            return Promise.reject(error);
-        }
-        if(response.status === 200){
-            console.log(response)
-            alert("Success, favorited politican!")
-        }else if(response.status === 409){
-            alert("Could Not Favorite Politican!")
-        }else{
-            alert("Could Not Favorite Politican")
-        }
-    })
-    .catch(error => {
-        console.error('There was an error!', error);
-        alert("Could Not Favorite Politican")
-    });
-}
-
-function favoritePolitican(event: any, rowData: any){
-    const bodyRequest = {
-        "politicianId": rowData['id'],
-        "userId" : localStorage.getItem('ID')
-    }
-    console.log(bodyRequest)
-    const JWT_TOKEN = localStorage.getItem("JWT")
-    //'Authorization': `Bearer ${JWT_TOKEN}`
-    const requestOptions = {
-        method: 'POST',
-        headers: { 
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${JWT_TOKEN}`,
-        },
-        body: JSON.stringify(bodyRequest)
-    };
-    makeFetch(requestOptions)
-}
-
-const PoliticiansTable = (props: any) => {
-    return (
+const columns = [
+    { title: "Bill Number", field: "billNumber" },
+    { title: "Bill Type", field: "billType" },
+]
+function BillsTable(props: any){
+      return (
         <div>
-            <MaterialTable
-                icons={tableIcons}
-                columns = {[
-                    { title: "Chamber", field: "chamber" },
-                    { title: "State", field: "state" },
-                    { title: "District", field: "district"},
-                    { title: "First Name", field: "firstName" },
-                    { title: "Last Name", field: "lastName" },
-                    { title: "Address", field: "address" },
-                    { title: "Phone", field: "phone"},
-                    { title: "Re-Election Date", field: "reelectionDate" },
-                    { title: "Contact Link", field: "contactLink" },
-                ]}
-                data = {props.rows}
-                title = "United States Congressmen"
-                localization={{
-                    header: {
-                        actions: 'Favorite Politician'
-                    } 
-                }}
-                actions={[
-                    {
-                      icon: Save,
-                      tooltip: 'Favorite Politician',
-                      onClick: favoritePolitican
-                    }
-                  ]}
-            >
-            </MaterialTable>
+          <MaterialTable
+            title="Favorited Bills"
+            icons={tableIcons}
+            columns={columns}
+            data={props.rows}
+            localization={{
+              header: {
+                  actions: 'Favorite Bill'
+              } 
+          }}
+          />
         </div>
-    )
-}
-
-export default PoliticiansTable;
+      );
+  }
+  
+export default BillsTable;
