@@ -1,7 +1,10 @@
 package com.congressconnection.conspring.util;
 
+import lombok.Getter;
+import lombok.Setter;
 import java.util.List;
 
+@Getter @Setter
 public class AuthenticationResponse {
 
     private final String jwt;
@@ -16,5 +19,5 @@ public class AuthenticationResponse {
         this.username = username;
         this.roles = roles;
     }
-    public String getJwt() { return jwt; }
+
 }

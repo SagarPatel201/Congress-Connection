@@ -26,6 +26,10 @@ public class BillService {
         return billRepository.findByBillType(billType, pageRequest);
     }
 
+    public Bill getByBillNumber(int billNumber, String billType) {
+        return billRepository.findByBillTypeAndBillNumber(billType, billNumber).orElse(null);
+    }
+
     public Optional<Bill> getByOriginChamberAndBillNumber(String billType, int billNumber) {
         return billRepository.findByBillTypeAndBillNumber(billType, billNumber);
     }

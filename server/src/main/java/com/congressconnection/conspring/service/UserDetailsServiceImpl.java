@@ -1,6 +1,6 @@
 package com.congressconnection.conspring.service;
 
-import com.congressconnection.conspring.util.UserDetailsImpl;
+import com.congressconnection.conspring.model.UserDetailsImpl;
 import com.congressconnection.conspring.model.User;
 import com.congressconnection.conspring.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

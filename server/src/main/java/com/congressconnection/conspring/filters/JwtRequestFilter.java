@@ -1,6 +1,6 @@
 package com.congressconnection.conspring.filters;
 
-import com.congressconnection.conspring.util.UserDetailsImpl;
+import com.congressconnection.conspring.model.UserDetailsImpl;
 import com.congressconnection.conspring.service.UserDetailsServiceImpl;
 import com.congressconnection.conspring.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;

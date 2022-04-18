@@ -1,6 +1,5 @@
-package com.congressconnection.conspring.util;
+package com.congressconnection.conspring.model;
 
-import com.congressconnection.conspring.model.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

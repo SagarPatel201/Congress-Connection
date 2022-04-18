@@ -1,8 +1,8 @@
 package com.congressconnection.conspring.controller;
 
+import com.congressconnection.conspring.model.UserDetailsImpl;
 import com.congressconnection.conspring.util.AuthenticationRequest;
 import com.congressconnection.conspring.util.AuthenticationResponse;
-import com.congressconnection.conspring.util.UserDetailsImpl;
 import com.congressconnection.conspring.model.User;
 import com.congressconnection.conspring.service.UserDetailsServiceImpl;
 import com.congressconnection.conspring.util.JwtUtil;
@@ -29,8 +29,8 @@ public class UserController {
     @Autowired private AuthenticationManager authenticationManager;
     @Autowired private UserDetailsServiceImpl userDetailsService;
     @Autowired private JwtUtil jwtTokenUtil;
-    private final String USER_DISABLED = "User is disabled";
-    private final String INCORRECT_CREDENTIALS = "Incorrect username or password";
+    @SuppressWarnings("FieldCanBeLocal") private final String USER_DISABLED = "User is disabled";
+    @SuppressWarnings("FieldCanBeLocal") private final String INCORRECT_CREDENTIALS = "Incorrect username or password";
     private final String USERNAME_EXISTS = "Username already exists";
     private final String NULL_PASSWORD = "You must enter a password";
 
