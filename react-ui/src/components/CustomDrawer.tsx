@@ -10,7 +10,8 @@ import Divider from '@mui/material/Divider';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
+
 const drawerWidth = 240;
 
 function drawer() {
@@ -59,9 +60,6 @@ function drawer() {
           sx={{ flexGrow: 1, bgcolor: 'background.default', p: 3 }}
         >
           <Toolbar />
-          <Typography paragraph>
-            Welcome Back
-          </Typography>
         </Box>
       </Box>
   );

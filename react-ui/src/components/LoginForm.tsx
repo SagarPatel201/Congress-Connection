@@ -1,7 +1,7 @@
 import React from 'react';
 import * as yup from 'yup';
-import { useFormik } from 'formik';
-import {TextField, Button, Grid} from "@mui/material"
+import {useFormik} from 'formik';
+import {Button, Grid, TextField} from "@mui/material"
 
 const validationSchema = yup.object({
     username: yup
@@ -40,6 +40,8 @@ const LoginForm = (props: any) => {
                         return Promise.reject(error);
                     }
                     if(response.status === 200){
+                        localStorage.setItem('JWT', data['jwt'])
+                        localStorage.setItem('ID', data['id'])
                         props.onSuccess();
                     }else{
                         alert("Invalid Login")

@@ -1,5 +1,7 @@
-import {forwardRef} from "react";
+import * as React from 'react';
+import {forwardRef} from 'react';
 import MaterialTable from "material-table";
+
 import AddBox from '@material-ui/icons/AddBox';
 import ArrowDownward from '@material-ui/icons/ArrowDownward';
 import Check from '@material-ui/icons/Check';
@@ -37,8 +39,9 @@ const tableIcons = {
     ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />)
 };
 
-function makeFetch(requestOptions){
-    fetch('http://cs431-02.cs.rutgers.edu:8080/favorites/bill', requestOptions)
+
+function makeFetch(requestOptions) {
+    fetch('http://cs431-02.cs.rutgers.edu:8080/favorites/politician', requestOptions)
         .then(async response => {
             const validJSON = response.headers.get('content-type')?.includes('application/json');
             const data = validJSON && await response.json();
@@ -49,24 +52,22 @@ function makeFetch(requestOptions){
             }
             if(response.status === 200){
                 console.log(response)
-                alert("Success, favorited Bill!")
+                alert("Success, favorited politician!")
             }else if(response.status === 409){
-                alert("Could Not Favorite Bill!")
+                alert("Could Not Favorite Politician!")
             }else{
-                alert("Could Not Favorite Bill")
+                alert("Could Not Favorite Politician")
             }
         })
         .catch(error => {
             console.error('There was an error!', error);
-            alert("Could Not Favorite Bill")
+            alert("Could Not Favorite Politician")
         });
 }
 
-
-function favoriteBill(event, rowData){
+function favoritePolitician(event, rowData) {
     const bodyRequest = {
-        "billNumber": rowData['billNumber'],
-        "billType": rowData['billType'],
+        "politicianId": rowData['id'],
         "userId" : localStorage.getItem('ID')
     }
     console.log(bodyRequest)
@@ -83,51 +84,42 @@ function favoriteBill(event, rowData){
     makeFetch(requestOptions)
 }
 
-function BillsTable() {
+const PoliticiansTable = (props) => {
     const columns = [
-        { title: "Bill Number", field: "billNumber" },
-        { title: "Bill Title", field: "title" },
-        { title: "Bill Type", field: "billType" },
+        { title: "Chamber", field: "chamber" },
+        { title: "State", field: "state" },
+        { title: "District", field: "district"},
+        { title: "Party", field: "party" },
+        { title: "First Name", field: "firstName" },
+        { title: "Last Name", field: "lastName" },
+        { title: "Address", field: "address" },
+        { title: "Phone", field: "phone"},
+        { title: "Re-Election Date", field: "reelectionDate" },
+        { title: "Contact Link", field: "contactLink" },
     ]
-    const data = (query) => (
-        new Promise((resolve, reject) => {
-            let url = "http://cs431-02.cs.rutgers.edu:8080/api/bills/all?";
-            url += "pageNumber=" + (query.page);
-            url += "&pageSize=" + query.pageSize;
-            fetch(url)
-                .then((response) => response.json())
-                .then((result) => {
-                    resolve({
-                        data: result['content'],
-                        page: result['pageable'].pageNumber,
-                        totalCount: result.totalPages,
-                    });
-                });
-        }));
-
     return (
         <div>
             <MaterialTable
-                title="United States Bills"
+                title = "United States Congressmen"
                 icons={tableIcons}
-                columns={columns}
-                data={data}
+                columns = {columns}
+                data = {props.rows}
                 localization={{
                     header: {
-                        actions: 'Favorite Bill'
+                        actions: 'Favorite Congressman'
                     }
                 }}
                 actions={[
                     {
                         icon: Save,
-                        tooltip: 'Favorite Bill',
-                        onClick: favoriteBill
+                        tooltip: 'Favorite Politician',
+                        onClick: favoritePolitician
                     }
                 ]}
-
-            />
+            >
+            </MaterialTable>
         </div>
-    );
+    )
 }
 
-export default BillsTable;
+export default PoliticiansTable;

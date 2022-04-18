@@ -1,9 +1,5 @@
-import { render } from "react-dom";
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-} from "react-router-dom";
+import {render} from "react-dom";
+import {BrowserRouter, Route, Routes,} from "react-router-dom";
 import App from "./App";
 import Homepage from "./routes/Homepage";
 import Favorites from "./routes/Favorites";
@@ -13,6 +9,7 @@ import News from "./routes/News";
 import NavigationBar from "./components/NavigationBar";
 import {ThemeProvider} from "@mui/material/styles";
 import {colorTheme} from "./theme/colorTheme";
+
 const rootElement = document.getElementById("root");
 
 render(

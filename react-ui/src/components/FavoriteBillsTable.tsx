@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {ForwardedRef, forwardRef, PropsWithChildren} from "react";
+import {ForwardedRef, forwardRef, PropsWithChildren} from 'react';
 import MaterialTable from "material-table";
 
 import AddBox from '@material-ui/icons/AddBox';
@@ -38,29 +38,28 @@ const tableIcons = {
     ViewColumn: forwardRef((props: PropsWithChildren<{}>, ref: ForwardedRef<any>) => <ViewColumn {...props} ref={ref} />)
 };
 
-const PoliticiansTable = (props: any) => {
-    return (
-        <div>
-            <MaterialTable
-                icons={tableIcons}
-                columns = {[
-                    { title: "Chamber", field: "chamber" },
-                    { title: "State", field: "state" },
-                    { title: "District", field: "district"},
-                    { title: "Party", field: "party" },
-                    { title: "First Name", field: "firstName" },
-                    { title: "Last Name", field: "lastName" },
-                    { title: "Address", field: "address" },
-                    { title: "Phone", field: "phone"},
-                    { title: "Re-Election Date", field: "reelectionDate" },
-                    { title: "Contact Link", field: "contactLink" },
-                ]}
-                data = {props.rows}
-                title = "United States Congressmen"
-            >
-            </MaterialTable>
-        </div>
-    )
-}
+const columns = [
+    { title: "Bill Number", field: "billNumber" },
+    { title: "Bill Type", field: "billType" },
+    { title: "Bill Title", field: "title" },
 
-export default PoliticiansTable;
+]
+function BillsTable(props: any){
+      return (
+        <div>
+          <MaterialTable
+            title="Favorited Bills"
+            icons={tableIcons}
+            columns={columns}
+            data={props.rows}
+            localization={{
+              header: {
+                  actions: 'Favorite Bill'
+              } 
+          }}
+          />
+        </div>
+      );
+  }
+  
+export default BillsTable;
