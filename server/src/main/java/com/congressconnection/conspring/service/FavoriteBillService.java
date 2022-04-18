@@ -29,4 +29,6 @@ public class FavoriteBillService {
         if(favoriteBillsRepository.exists(Example.of(favoriteBill))) { return true; }
         return false;
     }
+
+    public void removeBill(FavoriteBills favoriteBill) { favoriteBillsRepository.delete(favoriteBill);}
 }

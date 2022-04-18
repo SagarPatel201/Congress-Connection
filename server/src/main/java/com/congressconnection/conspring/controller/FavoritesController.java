@@ -72,4 +72,24 @@ public class FavoritesController {
         favoriteBillService.favoriteBill(favoriteBill);
         return new ResponseEntity<>("Favorite successful", HttpStatus.OK);
     }
+
+    @DeleteMapping("/remove/bill")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
+    public ResponseEntity<?> removeFavoriteBill(@RequestBody FavoriteBills favoriteBill) {
+        if(!favoriteBillService.isFavorite(favoriteBill))
+            return new ResponseEntity<>("ERROR: Unable to unfavorite a bill that is not favorited", HttpStatus.BAD_REQUEST);
+
+        favoriteBillService.removeBill(favoriteBill);
+        return new ResponseEntity<>("Removed bill from favorites", HttpStatus.OK);
+    }
+
+    @DeleteMapping("/remove/politician")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
+    public ResponseEntity<?> removeFavoritePolitician(@RequestBody FavoritePolitician favoritePolitician) {
+        if(!favoritePoliticiansService.isFavorite(favoritePolitician))
+            return new ResponseEntity<>("ERROR: Unable to unfavorite a politician that is not favorited", HttpStatus.BAD_REQUEST);
+
+        favoritePoliticiansService.removePolitician(favoritePolitician);
+        return new ResponseEntity<>("Removed politician from favorites", HttpStatus.OK);
+    }
 }

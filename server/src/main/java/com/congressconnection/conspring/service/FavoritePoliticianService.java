@@ -29,4 +29,8 @@ public class FavoritePoliticianService {
         if(favoritePoliticianRepository.exists(Example.of(favoritePolitician))) { return true; }
         return false;
     }
+
+    public void removePolitician(FavoritePolitician favoritePolitician) {
+        favoritePoliticianRepository.delete(favoritePolitician);
+    }
 }
