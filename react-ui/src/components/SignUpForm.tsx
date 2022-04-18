@@ -7,16 +7,16 @@ const validationSchema = yup.object({
     username: yup
         .string()
         .required('Username is required'),
-    password: yup
+    password1: yup
         .string()
         .required('Password is required'),
     password2: yup
         .string()
         .required('Password is required')
-        .oneOf([yup.ref('password'), null], 'Passwords must match')
+        .oneOf([yup.ref('password1'), null], 'Passwords must match')
 });
 
-const SignUpForm = () => {
+const SignUpForm = (props : {onSuccess: () => void}) => {
     const formik = useFormik({
         initialValues: {
             username: '',
@@ -43,12 +43,11 @@ const SignUpForm = () => {
                         const error = (data && data.message) || response.status;
                         return Promise.reject(error);
                     }
-                    if(response.status === 200){
-                        console.log(response)
-                        alert("Success, your account was created!")
-                    }else if(response.status === 409){
+                    if (response.status === 200){
+                        props.onSuccess();
+                    } else if (response.status === 409){
                         alert("Account Already Exists!")
-                    }else{
+                    } else{
                         alert("Account Creation Failed")
                     }
                 })
@@ -72,10 +71,10 @@ const SignUpForm = () => {
                         <TextField fullWidth label="Username" name="username" onChange={formik.handleChange} />
                     </Grid>
                     <Grid item xs={12}>
-                        <TextField fullWidth label="Password" name="password" onChange={formik.handleChange} />
+                        <TextField fullWidth label="Password" name="password1" onChange={formik.handleChange} />
                     </Grid>
                     <Grid item xs={12}>
-                        <TextField fullWidth label="Confirm Password" name="confirm-password" onChange={formik.handleChange} />
+                        <TextField fullWidth label="Confirm Password" name="password2" onChange={formik.handleChange} />
                     </Grid>
                     <Grid item >
                         <Button type="submit" variant="contained" color="primary">Sign Up</Button>

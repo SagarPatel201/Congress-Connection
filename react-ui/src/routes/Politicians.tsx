@@ -1,6 +1,4 @@
-import {Box, Paper} from '@mui/material';
 import React, {useState, useEffect} from 'react';
-import CustomDrawer from "../components/CustomDrawer"
 import PoliticiansTable from '../components/PoliticiansTable';
 
 function Politicians() {
@@ -31,15 +29,10 @@ function Politicians() {
         return(
             <p>Loading JSON results</p>
         )
-    }else{
+    } else{
         return(
-            <div className = "Table">
-                <CustomDrawer />
-                <Box
-                    paddingLeft = {30}
-                >
+            <div>
                 <PoliticiansTable rows = {items} />
-                    </Box>
             </div>
         )
     }
