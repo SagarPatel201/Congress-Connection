@@ -48,7 +48,7 @@ public class FavoritesController {
                     favoriteBillsList.get(i).getBillType()));
         }
 
-        return new ResponseEntity<>(favoriteBillsList, HttpStatus.OK);
+        return new ResponseEntity<>(billList, HttpStatus.OK);
     }
 
     @PostMapping("/politician")
