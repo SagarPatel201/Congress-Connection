@@ -10,6 +10,7 @@ function Favorites() {
 
     useEffect(() => {
         const JWT_TOKEN = localStorage.getItem("JWT")
+        const USER_ID = localStorage.getItem("ID")
 
         const requestOptions = {
             method: 'GET',
@@ -19,7 +20,7 @@ function Favorites() {
             },
         };
 
-        fetch("http://cs431-02.cs.rutgers.edu:8080/favorites/politicians/1", requestOptions)
+        fetch(`http://cs431-02.cs.rutgers.edu:8080/favorites/politicians/${USER_ID}`, requestOptions)
           .then(res => res.json())
           .then(
             (result) => {
@@ -33,7 +34,7 @@ function Favorites() {
             }
           )
 
-        fetch("http://cs431-02.cs.rutgers.edu:8080/favorites/bills/1", requestOptions)
+        fetch(`http://cs431-02.cs.rutgers.edu:8080/favorites/bills/${USER_ID}`, requestOptions)
             .then(res => res.json())
             .then(
             (result) => {
