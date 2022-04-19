@@ -58,6 +58,8 @@
     ]
   },
   "devDependencies": {
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.6",
     "material-table": "^2.0.3",
     "yup": "^0.32.11"
   }
