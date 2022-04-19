@@ -125,18 +125,7 @@ public class UserController {
         List<String> roles = userDetails.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList());
-//        System.out.println(userDetails.getId() + "\n" +
-//                            userDetails.getUsername() + "\n" +
-//                            roles);
 
         return ResponseEntity.ok(new AuthenticationResponse(jwt, userDetails.getId(), userDetails.getUsername(), roles));
     }
-
-    @GetMapping("/test/admin")
-    @PreAuthorize("hasRole('ADMIN')")
-    public String testString() { return "Only accessible to admins"; }
-
-    @GetMapping("/test/user")
-    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    public String testString2() { return "Accessible to both users and admins"; }
 }

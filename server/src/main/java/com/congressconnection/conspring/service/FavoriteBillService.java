@@ -26,8 +26,7 @@ public class FavoriteBillService {
     }
 
     public boolean isFavorite(FavoriteBills favoriteBill) {
-        if(favoriteBillsRepository.exists(Example.of(favoriteBill))) { return true; }
-        return false;
+        return favoriteBillsRepository.exists(Example.of(favoriteBill));
     }
 
     public void removeBill(FavoriteBills favoriteBill) { favoriteBillsRepository.delete(favoriteBill);}

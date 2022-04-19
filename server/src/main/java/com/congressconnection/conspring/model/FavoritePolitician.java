@@ -1,9 +1,13 @@
 package com.congressconnection.conspring.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.IdClass;
+import javax.persistence.Table;
+
 import lombok.Getter;
 import lombok.Setter;
-
-import javax.persistence.*;
 
 @Entity
 @Table(name = "favoritepoliticians")
@@ -14,7 +18,6 @@ public class FavoritePolitician {
     @Id @Column(name = "user_id") private long userId;
 
     public boolean emptyParam() {
-        if(politicianId.isBlank() || politicianId == null || userId == 0) return true;
-        return false;
+        return politicianId == null || politicianId.isBlank() || userId == 0;
     }
 }
