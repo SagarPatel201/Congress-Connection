@@ -1,6 +1,5 @@
 package com.congressconnection.conspring.service;
 
-import com.congressconnection.conspring.model.FavoriteBills;
 import com.congressconnection.conspring.model.FavoritePolitician;
 import com.congressconnection.conspring.repository.FavoritePoliticianRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +25,7 @@ public class FavoritePoliticianService {
     }
 
     public boolean isFavorite(FavoritePolitician favoritePolitician) {
-        if(favoritePoliticianRepository.exists(Example.of(favoritePolitician))) { return true; }
-        return false;
+        return favoritePoliticianRepository.exists(Example.of(favoritePolitician));
     }
 
     public void removePolitician(FavoritePolitician favoritePolitician) {

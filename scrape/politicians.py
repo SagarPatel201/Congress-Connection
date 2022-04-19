@@ -1,10 +1,7 @@
 import requests
-from requests.auth import HTTPBasicAuth
 import pandas as pd
-import numpy as np
-from sqlalchemy import create_engine, MetaData, Table, select, func
+from sqlalchemy import create_engine, MetaData, Table
 from sqlalchemy.dialects.mysql import insert
-import pymysql
 import os
 import sys
 
