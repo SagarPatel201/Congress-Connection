@@ -16,6 +16,7 @@ import SaveAlt from '@material-ui/icons/SaveAlt';
 import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
 import Save from '@material-ui/icons/Save';
+import Delete from '@material-ui/icons/Delete';
 
 const tableIcons = {
     Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
@@ -37,6 +38,29 @@ const tableIcons = {
     ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />)
 };
 
+function makeFetchDelete(requestOptions){
+    fetch('http://cs431-02.cs.rutgers.edu:8080/favorites/remove/bill', requestOptions)
+    .then(async response => {
+        const validJSON = response.headers.get('content-type')?.includes('application/json');
+        const data = validJSON && await response.json();
+        console.log(data)
+        if (!response.ok) {
+            const error = (data && data.message) || response.status;
+            return Promise.reject(error);
+        }
+        if(response.status === 200){
+            console.log(response)
+            alert("Success, favorited Bill removed!")
+        }else{
+            alert("Could Not removed favorited Bill")
+        }
+    })
+    .catch(error => {
+        console.error('There was an error!', error);
+        alert("Could Not Favorite Bill")
+    });
+}
+
 function makeFetch(requestOptions){
     fetch('http://cs431-02.cs.rutgers.edu:8080/favorites/bill', requestOptions)
         .then(async response => {
@@ -47,11 +71,11 @@ function makeFetch(requestOptions){
                 const error = (data && data.message) || response.status;
                 return Promise.reject(error);
             }
-            if(response.status === 200){
+            if(response.status === 201){
                 console.log(response)
                 alert("Success, favorited Bill!")
             }else if(response.status === 409){
-                alert("Could Not Favorite Bill!")
+                alert("Bill is already favorited!")
             }else{
                 alert("Could Not Favorite Bill")
             }
@@ -62,6 +86,25 @@ function makeFetch(requestOptions){
         });
 }
 
+function removeFavoriteBill(event, rowData){
+    const bodyRequest = {
+        "billNumber": rowData['billNumber'],
+        "billType": rowData['billType'],
+        "userId" : localStorage.getItem('ID')
+    }
+    console.log(bodyRequest)
+    const JWT_TOKEN = localStorage.getItem("JWT")
+    //'Authorization': `Bearer ${JWT_TOKEN}`
+    const requestOptions = {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${JWT_TOKEN}`,
+        },
+        body: JSON.stringify(bodyRequest)
+    };
+    makeFetchDelete(requestOptions);
+}
 
 function favoriteBill(event, rowData){
     const bodyRequest = {
@@ -122,7 +165,11 @@ function BillsTable() {
                         icon: Save,
                         tooltip: 'Favorite Bill',
                         onClick: favoriteBill
-                    }
+                    },{
+                        icon: Delete,
+                        tooltip: 'Delete Favorited Bill',
+                        onClick: removeFavoriteBill
+                      }
                 ]}
 
             />

@@ -19,7 +19,12 @@ function Favorites() {
             },
         };
 
-        fetch("http://cs431-02.cs.rutgers.edu:8080/favorites/politicians/1", requestOptions)
+        let URL1 = "http://cs431-02.cs.rutgers.edu:8080/favorites/politicians/"
+        let URL2 = "http://cs431-02.cs.rutgers.edu:8080/favorites/bills/"
+        URL1 += localStorage.getItem("ID")
+        URL2 += localStorage.getItem("ID")
+
+        fetch(URL1, requestOptions)
           .then(res => res.json())
           .then(
             (result) => {
@@ -33,7 +38,7 @@ function Favorites() {
             }
           )
 
-        fetch("http://cs431-02.cs.rutgers.edu:8080/favorites/bills/1", requestOptions)
+        fetch(URL2, requestOptions)
             .then(res => res.json())
             .then(
             (result) => {

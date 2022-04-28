@@ -18,7 +18,7 @@ import SaveAlt from '@material-ui/icons/SaveAlt';
 import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
 import Save from '@material-ui/icons/Save';
-
+import Delete from '@material-ui/icons/Delete';
 const tableIcons = {
     Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
     Check: forwardRef((props, ref) => <Check {...props} ref={ref} />),
@@ -39,6 +39,28 @@ const tableIcons = {
     ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />)
 };
 
+function makeFetchDelete(requestOptions){
+    fetch('http://cs431-02.cs.rutgers.edu:8080/favorites/remove/politician', requestOptions)
+    .then(async response => {
+        const validJSON = response.headers.get('content-type')?.includes('application/json');
+        const data = validJSON && await response.json();
+        console.log(data)
+        if (!response.ok) {
+            const error = (data && data.message) || response.status;
+            return Promise.reject(error);
+        }
+        if(response.status === 200){ //might have to change to 201
+            console.log(response)
+            alert("Success, favorited politician removed!")
+        }else{
+            alert("Could Not Removed Favorited Politician")
+        }
+    })
+    .catch(error => {
+        console.error('There was an error!', error);
+        alert("Could Not Favorite Politician")
+    });
+}
 
 function makeFetch(requestOptions) {
     fetch('http://cs431-02.cs.rutgers.edu:8080/favorites/politician', requestOptions)
@@ -50,11 +72,11 @@ function makeFetch(requestOptions) {
                 const error = (data && data.message) || response.status;
                 return Promise.reject(error);
             }
-            if(response.status === 200){
+            if(response.status === 201){ //might have to change to 201
                 console.log(response)
                 alert("Success, favorited politician!")
             }else if(response.status === 409){
-                alert("Could Not Favorite Politician!")
+                alert("Politician already favorited!")
             }else{
                 alert("Could Not Favorite Politician")
             }
@@ -65,6 +87,27 @@ function makeFetch(requestOptions) {
         });
 }
 
+function removePoliticianFavorite(event, rowData){
+    console.log(rowData['id'])
+    const bodyRequest = {
+        "politicianId": rowData['id'],
+        "userId" : localStorage.getItem('ID')
+    }
+    console.log(bodyRequest)
+    const JWT_TOKEN = localStorage.getItem("JWT")
+    console.log(JWT_TOKEN)
+    //'Authorization': `Bearer ${JWT_TOKEN}`
+    const requestOptions = {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${JWT_TOKEN}`,
+        },
+        body: JSON.stringify(bodyRequest)
+    };
+    makeFetchDelete(requestOptions)
+}
+
 function favoritePolitician(event, rowData) {
     const bodyRequest = {
         "politicianId": rowData['id'],
@@ -73,6 +116,7 @@ function favoritePolitician(event, rowData) {
     console.log(bodyRequest)
     const JWT_TOKEN = localStorage.getItem("JWT")
     //'Authorization': `Bearer ${JWT_TOKEN}`
+    console.log(JWT_TOKEN)
     const requestOptions = {
         method: 'POST',
         headers: {
@@ -114,6 +158,11 @@ const PoliticiansTable = (props) => {
                         icon: Save,
                         tooltip: 'Favorite Politician',
                         onClick: favoritePolitician
+                    },
+                    {
+                      icon: Delete,
+                      tooltip: 'Delete Favorited Politician',
+                      onClick: removePoliticianFavorite
                     }
                 ]}
             >
