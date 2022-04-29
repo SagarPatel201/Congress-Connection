@@ -4,11 +4,9 @@ import shutil
 import zipfile
 import io
 import xml.etree.ElementTree as ET
-from sqlalchemy import create_engine, MetaData, Table, select, func
+from sqlalchemy import create_engine, MetaData, Table, select
 from sqlalchemy.dialects.mysql import insert
-import pymysql
 import time
-from datetime import datetime
 from dateutil import parser
 
 # The govinfo site hosts a bulk database of bill statuses filled with xml files instead of a RESTful API. 
@@ -209,6 +207,6 @@ with engine.connect() as conn:
 
 shutil.rmtree(save_loc)
 
-execution_time = time.time() - start_time;
+execution_time = time.time() - start_time
 print('\n')
 print(f'Executed in {round(execution_time)} seconds')

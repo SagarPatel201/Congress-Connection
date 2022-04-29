@@ -49,7 +49,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     }
 
     public static Boolean isAdmin(User user) {
-        return user.getRoles() == "admin";
+        return user.getRoles().equals("admin");
     }
 
 }

@@ -56,10 +56,10 @@ public class FavoritesController {
     public ResponseEntity<?> favoritePolitician(@RequestBody FavoritePolitician favoritePolitician) {
         if(favoritePolitician.emptyParam()) return new ResponseEntity<>("Missing a parameter in body", HttpStatus.BAD_REQUEST);
         if(favoritePoliticiansService.isFavorite(favoritePolitician))
-            return new ResponseEntity<>("Already a favorite politician", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Already a favorite politician", HttpStatus.CONFLICT);
 
         favoritePoliticiansService.favoritePolitician(favoritePolitician);
-        return new ResponseEntity<>("Favorite politician successful", HttpStatus.OK);
+        return new ResponseEntity<>("Favorite politician successful", HttpStatus.CREATED);
     }
 
     @PostMapping("/bill")
@@ -67,10 +67,10 @@ public class FavoritesController {
     public ResponseEntity<?> favoriteBill(@RequestBody FavoriteBills favoriteBill) {
         if(favoriteBill.emptyParam()) return new ResponseEntity<>("Missing a parameter in body", HttpStatus.BAD_REQUEST);
         if(favoriteBillService.isFavorite(favoriteBill))
-            return new ResponseEntity<>("Already a favorite bill", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Already a favorite bill", HttpStatus.CONFLICT);
 
         favoriteBillService.favoriteBill(favoriteBill);
-        return new ResponseEntity<>("Favorite successful", HttpStatus.OK);
+        return new ResponseEntity<>("Favorite successful", HttpStatus.CREATED);
     }
 
     @DeleteMapping("/remove/bill")
