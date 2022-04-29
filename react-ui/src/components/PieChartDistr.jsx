@@ -6,17 +6,17 @@ const defaultLabelStyle = {
     fontFamily: 'sans-serif',
   };
 
-function PieChartDist(props){
+function PartyDistPie(props){
     let numDemocrats = 0
     let numRepublicans = 0
     let others = 0
     for (let i = 0; i < props.data.length; i++){
         let politician = props.data[i]
-        if(politician['party'] == 'D'){
+        if(politician['party'] === 'D'){
             numDemocrats+=1;
-        }else if(politician['party'] == 'R'){
+        }else if(politician['party'] === 'R'){
             console.log(politician['party'])
-            numRepublicans +=1;
+            numRepublicans += 1;
         }else{
             console.log(politician['party'])
             others += 1
@@ -43,4 +43,4 @@ function PieChartDist(props){
     )
 }
 
-export default PieChartDist;
+export default PartyDistPie;
