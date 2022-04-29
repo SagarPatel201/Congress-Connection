@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import PoliticiansTable from '../components/PoliticiansTable';
 import PieChartDist from '../components/PieChartDistr';
+
 function Politicians() {
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
