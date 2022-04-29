@@ -128,9 +128,12 @@ function favoriteBill(event, rowData){
 
 function BillsTable() {
     const columns = [
+        { title: "Bill Type", field: "billType" },
         { title: "Bill Number", field: "billNumber" },
         { title: "Bill Title", field: "title" },
-        { title: "Bill Type", field: "billType" },
+        { title: "Policy Area", field: "policyArea"},
+        { title: "Introduced On", field: "introducedDate"},
+        { title: "Last Updated", field: "updateDate"},
     ]
     const data = (query) => (
         new Promise((resolve, reject) => {
@@ -141,7 +144,16 @@ function BillsTable() {
                 .then((response) => response.json())
                 .then((result) => {
                     resolve({
-                        data: result['content'],
+                        data: result['content'].map(bill => {
+                            return {
+                                billNumber: bill['billNumber'],
+                                billType: bill['billType'],
+                                title: bill['title'],
+                                policyArea: bill['policyArea'] ?? "None",
+                                introducedDate: new Date(bill['introducedDate']).toLocaleDateString(),
+                                updateDate: new Date(bill['updateDate']).toLocaleDateString(),
+                            }
+                        }),
                         page: result['pageable'].pageNumber,
                         totalCount: result.totalPages,
                     });
