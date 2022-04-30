@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useEffect, useState, useCallback} from 'react';
 import {forwardRef} from 'react';
 import MaterialTable from "material-table";
 
@@ -19,6 +19,7 @@ import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
 import Save from '@material-ui/icons/Save';
 import Delete from '@material-ui/icons/Delete';
+import AddLocationAltIcon from '@mui/icons-material/AddLocationAlt';
 const tableIcons = {
     Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
     Check: forwardRef((props, ref) => <Check {...props} ref={ref} />),
@@ -128,7 +129,21 @@ function favoritePolitician(event, rowData) {
     makeFetch(requestOptions)
 }
 
+function onClick(){
+    console.log("Clicked")
+
+    navigator.geolocation.getCurrentPosition(function(position) {
+        const latitude = position.coords.latitude
+        const longitude = position.coords.longitude
+        alert(latitude + " " + longitude)
+      });
+}
+
 const PoliticiansTable = (props) => {
+    const [text, setText] = useState("")
+    const [, updateState] = React.useState();
+    const forceUpdate = React.useCallback(() => updateState({}), []);
+    console.log(text)
     const columns = [
         { title: "Chamber", field: "chamber" },
         { title: "State", field: "state" },
@@ -151,7 +166,10 @@ const PoliticiansTable = (props) => {
                 localization={{
                     header: {
                         actions: 'Favorite Congressman'
-                    }
+                    },
+                }}
+                options={{
+                    searchText: text
                 }}
                 actions={[
                     {
@@ -163,6 +181,15 @@ const PoliticiansTable = (props) => {
                       icon: Delete,
                       tooltip: 'Delete Favorited Politician',
                       onClick: removePoliticianFavorite
+                    },{
+                        icon: AddLocationAltIcon,
+                        tooltip: "Get Politicians By Location",
+                        position: "toolbar",
+                        onClick: () =>{
+                            alert("Clicked")
+                            forceUpdate();
+                            setText("NJ")
+                        }
                     }
                 ]}
             >
