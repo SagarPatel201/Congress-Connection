@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import PoliticiansTable from '../components/PoliticiansTable';
-import BillsTable from '../components/FavoriteBillsTable';
+import BillsTable from '../components/BillsTable';
 
 function Favorites() {
     const [error, setError] = useState(null);
@@ -40,7 +40,7 @@ function Favorites() {
             (result) => {
                 setIsLoaded(true);
                 setBills(result);
-                console.log(result);
+                console.log("Set bills " + result);
             },
             (error) => {
                 setIsLoaded(true);
@@ -61,8 +61,8 @@ function Favorites() {
     }else{
         return(
             <div className = "Table">
-                <PoliticiansTable rows = {politicians} />
-                <BillsTable rows = {bills} />
+                <PoliticiansTable politicians = {politicians} />
+                <BillsTable bills = {bills} />
             </div>
         )
     }

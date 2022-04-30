@@ -126,7 +126,7 @@ function favoriteBill(event, rowData){
     makeFetch(requestOptions)
 }
 
-function BillsTable() {
+function BillsTable(props) {
     const columns = [
         { title: "Bill Type", field: "billType" },
         { title: "Bill Number", field: "billNumber" },
@@ -135,30 +135,6 @@ function BillsTable() {
         { title: "Introduced On", field: "introducedDate"},
         { title: "Last Updated", field: "updateDate"},
     ]
-    const data = (query) => (
-        new Promise((resolve, reject) => {
-            let url = "http://cs431-02.cs.rutgers.edu:8080/api/bills/all?";
-            url += "pageNumber=" + (query.page);
-            url += "&pageSize=" + query.pageSize;
-            fetch(url)
-                .then((response) => response.json())
-                .then((result) => {
-                    resolve({
-                        data: result['content'].map(bill => {
-                            return {
-                                billNumber: bill['billNumber'],
-                                billType: bill['billType'],
-                                title: bill['title'],
-                                policyArea: bill['policyArea'] ?? "None",
-                                introducedDate: new Date(bill['introducedDate']).toLocaleDateString(),
-                                updateDate: new Date(bill['updateDate']).toLocaleDateString(),
-                            }
-                        }),
-                        page: result['pageable'].pageNumber,
-                        totalCount: result.totalPages,
-                    });
-                });
-        }));
 
     return (
         <div>
@@ -166,7 +142,7 @@ function BillsTable() {
                 title="United States Bills"
                 icons={tableIcons}
                 columns={columns}
-                data={data}
+                data={props.bills}
                 localization={{
                     header: {
                         actions: 'Favorite Bill'

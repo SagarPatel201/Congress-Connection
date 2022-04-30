@@ -32,7 +32,7 @@ function Politicians() {
     } else{
         return(
             <div>
-                <PoliticiansTable rows = {items} />
+                <PoliticiansTable politicians = {items} />
                 <PartyDistPie data = {items}/>
             </div>
         )

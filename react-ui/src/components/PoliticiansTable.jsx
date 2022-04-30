@@ -79,6 +79,7 @@ function makeFetch(requestOptions) {
             }else if(response.status === 409){
                 alert("Politician already favorited!")
             }else{
+                console.log(response.status)
                 alert("Could Not Favorite Politician")
             }
         })
@@ -162,7 +163,7 @@ const PoliticiansTable = (props) => {
                 title = "United States Congressmen"
                 icons={tableIcons}
                 columns = {columns}
-                data = {props.rows}
+                data = {props.politicians}
                 localization={{
                     header: {
                         actions: 'Favorite Congressman'
