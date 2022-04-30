@@ -37,7 +37,7 @@ function Politicians() {
           )
       }, [])
       
-    if (error){
+    if (error) {
         return(
             <div style={{
                 display: 'flex',

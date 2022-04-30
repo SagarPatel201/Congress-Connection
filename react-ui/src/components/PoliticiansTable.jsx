@@ -152,10 +152,10 @@ const PoliticiansTable = (props) => {
         { title: "Party", field: "party" },
         { title: "First Name", field: "firstName" },
         { title: "Last Name", field: "lastName" },
-        { title: "Address", field: "address" },
-        { title: "Phone", field: "phone"},
+        { title: "Address", field: "address", filtering: false},
+        { title: "Phone", field: "phone", filtering: false},
         { title: "Re-Election Date", field: "reelectionDate" },
-        { title: "Contact Link", field: "contactLink" },
+        { title: "Contact Link", field: "contactLink", filtering: false},
     ]
     return (
         <div>
@@ -170,7 +170,8 @@ const PoliticiansTable = (props) => {
                     },
                 }}
                 options={{
-                    searchText: text
+                    searchText: text,
+                    filtering: true,
                 }}
                 actions={[
                     {

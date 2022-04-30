@@ -148,6 +148,9 @@ function BillsTable(props) {
                         actions: 'Favorite Bill'
                     }
                 }}
+                options={{
+                    filtering: true,
+                }}
                 actions={[
                     {
                         icon: Save,
