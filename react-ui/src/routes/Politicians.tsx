@@ -15,6 +15,7 @@ function Politicians() {
               setIsLoaded(true);
               setItems(result.map( (congressman: { [x: string]: any; }) => {
                     return {
+                        id: congressman['id'],
                         firstName: congressman['firstName'],
                         lastName: congressman['lastName'],
                         chamber: congressman['chamber'],

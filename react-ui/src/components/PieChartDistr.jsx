@@ -20,7 +20,7 @@ function PartyDistPie(props){
         }
     });
 
-    let colors = ['#0066ff', '#ff0000', '#ffffff'];
+    let colors = ['#0066ff', '#ff0000', '#ff0fff'];
     let chartData = {
         labels: labels,
         datasets: [{
