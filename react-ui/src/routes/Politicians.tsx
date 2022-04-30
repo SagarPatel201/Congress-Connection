@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import PoliticiansTable from '../components/PoliticiansTable';
-import PartyDistPie from '../components/PieChartDistr';
+
 function Politicians() {
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
@@ -33,7 +33,6 @@ function Politicians() {
         return(
             <div>
                 <PoliticiansTable politicians = {items} />
-                <PartyDistPie data = {items}/>
             </div>
         )
     }

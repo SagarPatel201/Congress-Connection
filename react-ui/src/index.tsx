@@ -9,6 +9,7 @@ import News from "./routes/News";
 import NavigationBar from "./components/NavigationBar";
 import {ThemeProvider} from "@mui/material/styles";
 import {colorTheme} from "./theme/colorTheme";
+import Analytics from "./routes/Analytics";
 
 const rootElement = document.getElementById("root");
 
@@ -24,6 +25,7 @@ render(
                 <Route path="bills" element={<Bills />} />
                 <Route path="news" element={<News />} />
                 <Route path="logout" element={<App />} />
+                <Route path="analytics" element={<Analytics />} />
             </Routes>
         </ThemeProvider>
     </BrowserRouter>,

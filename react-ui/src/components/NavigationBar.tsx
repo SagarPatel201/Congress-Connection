@@ -34,6 +34,11 @@ function NavigationBar() {
                         </Link>
                     </ListItem>
                     <ListItem>
+                        <Link component={RouterLink} to={'/analytics'}>
+                            Analytics
+                        </Link>
+                    </ListItem>
+                    <ListItem>
                         <Link component={RouterLink} to="/news">
                             News
                         </Link>
