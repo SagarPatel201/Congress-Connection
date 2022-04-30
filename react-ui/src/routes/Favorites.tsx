@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import PoliticiansTable from '../components/FavoritePoliTable';
+import PoliticiansTable from '../components/PoliticiansTable';
 import BillsTable from '../components/FavoriteBillsTable';
 
 function Favorites() {
