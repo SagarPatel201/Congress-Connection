@@ -81,6 +81,7 @@ function NavigationBar() {
                         variant={'contained'}
                         onClick={() => {
                             localStorage.removeItem("JWT");
+                            localStorage.removeItem("ID")
                             window.location.reload();
                         }}
                     >
