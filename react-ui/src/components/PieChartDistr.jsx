@@ -1,8 +1,9 @@
 import { Pie } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import * as rca from "rainbow-colors-array";
 import * as React from 'react';
 
-function PartyDistPie(props){
+export function PartyDistPie(props){
     ChartJS.register(ArcElement, Tooltip, Legend);
 
     // Get the number of each party
@@ -53,6 +54,10 @@ export function BillPolicyDistPie(props) {
 
     let labels = Array.from(counts.keys());
     let data = Array.from(counts.values());
+    let colors = rca(data.length, "hex", false)
+        .map(color => '#' + color['hex'])
+        .sort(() =>  0.5 - Math.random()); // Shuffle the colors up so it doesnt look like a gradient
+    console.log(colors)
     return (
         <Pie
             data = {{
@@ -60,13 +65,11 @@ export function BillPolicyDistPie(props) {
                 datasets: [{
                     label: props.label,
                     data: data,
+                    backgroundColor: colors,
+                    borderColor: colors,
                 }],
-            }}
-            options = {{
-                maintainAspectRatio: false,
-            }}
+                }
+            }
         />
     )
 }
-
-export default PartyDistPie;
