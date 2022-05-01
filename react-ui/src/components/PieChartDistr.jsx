@@ -1,16 +1,16 @@
-import { Pie } from 'react-chartjs-2';
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import {Pie} from 'react-chartjs-2';
+import {ArcElement, Chart as ChartJS, Legend, Tooltip} from 'chart.js';
 import * as rca from "rainbow-colors-array";
 import * as React from 'react';
 
-export function PartyDistPie(props){
+export function PartyDistPie(props) {
     ChartJS.register(ArcElement, Tooltip, Legend);
 
     // Get the number of each party
     let labels = ['Democrat', 'Republican', 'Independent'];
     let counts = new Map();
     labels.forEach(label => counts.set(label, 0));
-    props.data.forEach( (congressman) => {
+    props.data.forEach((congressman) => {
         let party = congressman['party'];
         if (party === 'D') {
             counts.set('Democrat', counts.get('Democrat') + 1);
@@ -34,7 +34,7 @@ export function PartyDistPie(props){
 
     return (
         <Pie
-            data = {chartData}
+            data={chartData}
         />
     )
 }
@@ -43,7 +43,7 @@ export function BillPolicyDistPie(props) {
     // Count the number of each policy area
     let bills = props.bills;
     let counts = new Map();
-    bills.forEach( bill => {
+    bills.forEach(bill => {
             if (counts.has(bill['policyArea'])) {
                 counts.set(bill['policyArea'], counts.get(bill['policyArea']) + 1);
             } else {
@@ -56,11 +56,11 @@ export function BillPolicyDistPie(props) {
     let data = Array.from(counts.values());
     let colors = rca(data.length, "hex", false)
         .map(color => '#' + color['hex'])
-        .sort(() =>  0.5 - Math.random()); // Shuffle the colors up so it doesnt look like a gradient
+        .sort(() => 0.5 - Math.random()); // Shuffle the colors up so it doesnt look like a gradient
     console.log(colors)
     return (
         <Pie
-            data = {{
+            data={{
                 labels: labels,
                 datasets: [{
                     label: props.label,
@@ -68,7 +68,7 @@ export function BillPolicyDistPie(props) {
                     backgroundColor: colors,
                     borderColor: colors,
                 }],
-                }
+            }
             }
         />
     )

@@ -9,37 +9,37 @@ function Politicians() {
     const [items, setItems] = useState([]);
     useEffect(() => {
         fetch("http://cs431-02.cs.rutgers.edu:8080/api/congressmen")
-          .then(res => res.json())
-          .then(
-            (result) => {
-              setIsLoaded(true);
-              setItems(result.map( (congressman: { [x: string]: any; }) => {
-                    return {
-                        id: congressman['id'],
-                        firstName: congressman['firstName'],
-                        lastName: congressman['lastName'],
-                        chamber: congressman['chamber'],
-                        party: congressman['party'],
-                        state: congressman['state'],
-                        district: congressman['chamber'] === 'senate' ? '' : (congressman['district'] === 0 ? 'At-Large' : congressman['district']),
-                        phone: congressman['phone'],
-                        address: congressman['address'],
-                        reelectionDate: congressman['reelectionDate'],
-                        contactLink: congressman['contactLink'],
-                    }
-                  })
-              );
-              console.log(result);
-            },
-            (error) => {
-              setIsLoaded(true);
-              setError(error);
-            }
-          )
-      }, [])
-      
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    setIsLoaded(true);
+                    setItems(result.map((congressman: { [x: string]: any; }) => {
+                            return {
+                                id: congressman['id'],
+                                firstName: congressman['firstName'],
+                                lastName: congressman['lastName'],
+                                chamber: congressman['chamber'],
+                                party: congressman['party'],
+                                state: congressman['state'],
+                                district: congressman['chamber'] === 'senate' ? '' : (congressman['district'] === 0 ? 'At-Large' : congressman['district']),
+                                phone: congressman['phone'],
+                                address: congressman['address'],
+                                reelectionDate: congressman['reelectionDate'],
+                                contactLink: congressman['contactLink'],
+                            }
+                        })
+                    );
+                    console.log(result);
+                },
+                (error) => {
+                    setIsLoaded(true);
+                    setError(error);
+                }
+            )
+    }, [])
+
     if (error) {
-        return(
+        return (
             <div style={{
                 display: 'flex',
                 justifyContent: 'center',
@@ -53,8 +53,8 @@ function Politicians() {
                 <h2>There was an error trying to fetch data from the server. Please try again later.</h2>
             </div>
         )
-    }else if(!isLoaded){
-        return(
+    } else if (!isLoaded) {
+        return (
             <div style={{
                 display: 'flex',
                 justifyContent: 'center',
@@ -64,15 +64,16 @@ function Politicians() {
                 flexDirection: 'column',
                 textAlign: 'center'
             }}>
-                <CircularProgress />
+                <CircularProgress/>
             </div>
         )
-    } else{
-        return(
+    } else {
+        return (
             <div>
-                <PoliticiansTable politicians = {items} />
+                <PoliticiansTable politicians={items}/>
             </div>
         )
     }
 }
+
 export default Politicians;

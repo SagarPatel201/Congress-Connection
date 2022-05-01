@@ -20,49 +20,49 @@ import Delete from '@material-ui/icons/Delete';
 import {colorTheme} from "../theme/colorTheme";
 
 const tableIcons = {
-    Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
-    Check: forwardRef((props, ref) => <Check {...props} ref={ref} />),
-    Clear: forwardRef((props, ref) => <Clear {...props} ref={ref} />),
-    Delete: forwardRef((props, ref) => <DeleteOutline {...props} ref={ref} />),
-    DetailPanel: forwardRef((props, ref) => <ChevronRight {...props} ref={ref} />),
-    Edit: forwardRef((props, ref) => <Edit {...props} ref={ref} />),
-    Export: forwardRef((props, ref) => <SaveAlt {...props} ref={ref} />),
-    Filter: forwardRef((props, ref) => <FilterList {...props} ref={ref} />),
-    FirstPage: forwardRef((props, ref) => <FirstPage {...props} ref={ref} />),
-    LastPage: forwardRef((props, ref) => <LastPage {...props} ref={ref} />),
-    NextPage: forwardRef((props, ref) => <ChevronRight {...props} ref={ref} />),
-    PreviousPage: forwardRef((props, ref) => <ChevronLeft {...props} ref={ref} />),
-    ResetSearch: forwardRef((props, ref) => <Clear {...props} ref={ref} />),
-    Search: forwardRef((props, ref) => <Search {...props} ref={ref} />),
-    SortArrow: forwardRef((props, ref) => <ArrowDownward {...props} ref={ref} />),
-    ThirdStateCheck: forwardRef((props, ref) => <Remove {...props} ref={ref} />),
-    ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />)
+    Add: forwardRef((props, ref) => <AddBox {...props} ref={ref}/>),
+    Check: forwardRef((props, ref) => <Check {...props} ref={ref}/>),
+    Clear: forwardRef((props, ref) => <Clear {...props} ref={ref}/>),
+    Delete: forwardRef((props, ref) => <DeleteOutline {...props} ref={ref}/>),
+    DetailPanel: forwardRef((props, ref) => <ChevronRight {...props} ref={ref}/>),
+    Edit: forwardRef((props, ref) => <Edit {...props} ref={ref}/>),
+    Export: forwardRef((props, ref) => <SaveAlt {...props} ref={ref}/>),
+    Filter: forwardRef((props, ref) => <FilterList {...props} ref={ref}/>),
+    FirstPage: forwardRef((props, ref) => <FirstPage {...props} ref={ref}/>),
+    LastPage: forwardRef((props, ref) => <LastPage {...props} ref={ref}/>),
+    NextPage: forwardRef((props, ref) => <ChevronRight {...props} ref={ref}/>),
+    PreviousPage: forwardRef((props, ref) => <ChevronLeft {...props} ref={ref}/>),
+    ResetSearch: forwardRef((props, ref) => <Clear {...props} ref={ref}/>),
+    Search: forwardRef((props, ref) => <Search {...props} ref={ref}/>),
+    SortArrow: forwardRef((props, ref) => <ArrowDownward {...props} ref={ref}/>),
+    ThirdStateCheck: forwardRef((props, ref) => <Remove {...props} ref={ref}/>),
+    ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref}/>)
 };
 
-function makeFetchDelete(requestOptions){
+function makeFetchDelete(requestOptions) {
     fetch('http://cs431-02.cs.rutgers.edu:8080/favorites/remove/bill', requestOptions)
-    .then(async response => {
-        const validJSON = response.headers.get('content-type')?.includes('application/json');
-        const data = validJSON && await response.json();
-        console.log(data)
-        if (!response.ok) {
-            const error = (data && data.message) || response.status;
-            return Promise.reject(error);
-        }
-        if(response.status === 200){
-            console.log(response)
-            alert("Success, favorited Bill removed!")
-        }else{
-            alert("Could Not removed favorited Bill")
-        }
-    })
-    .catch(error => {
-        console.error('There was an error!', error);
-        alert("Could Not Favorite Bill")
-    });
+        .then(async response => {
+            const validJSON = response.headers.get('content-type')?.includes('application/json');
+            const data = validJSON && await response.json();
+            console.log(data)
+            if (!response.ok) {
+                const error = (data && data.message) || response.status;
+                return Promise.reject(error);
+            }
+            if (response.status === 200) {
+                console.log(response)
+                alert("Success, favorited Bill removed!")
+            } else {
+                alert("Could Not removed favorited Bill")
+            }
+        })
+        .catch(error => {
+            console.error('There was an error!', error);
+            alert("Could Not Favorite Bill")
+        });
 }
 
-function makeFetch(requestOptions){
+function makeFetch(requestOptions) {
     fetch('http://cs431-02.cs.rutgers.edu:8080/favorites/bill', requestOptions)
         .then(async response => {
             const validJSON = response.headers.get('content-type')?.includes('application/json');
@@ -72,12 +72,12 @@ function makeFetch(requestOptions){
                 const error = (data && data.message) || response.status;
                 return Promise.reject(error);
             }
-            if(response.status === 201){
+            if (response.status === 201) {
                 console.log(response)
                 alert("Success, favorited Bill!")
-            }else if(response.status === 409){
+            } else if (response.status === 409) {
                 alert("Bill is already favorited!")
-            }else{
+            } else {
                 alert("Could Not Favorite Bill")
             }
         })
@@ -87,11 +87,11 @@ function makeFetch(requestOptions){
         });
 }
 
-function removeFavoriteBill(event, rowData){
+function removeFavoriteBill(event, rowData) {
     const bodyRequest = {
         "billNumber": rowData['billNumber'],
         "billType": rowData['billType'],
-        "userId" : localStorage.getItem('ID')
+        "userId": localStorage.getItem('ID')
     }
     console.log(bodyRequest)
     const JWT_TOKEN = localStorage.getItem("JWT")
@@ -107,11 +107,11 @@ function removeFavoriteBill(event, rowData){
     makeFetchDelete(requestOptions);
 }
 
-function favoriteBill(event, rowData){
+function favoriteBill(event, rowData) {
     const bodyRequest = {
         "billNumber": rowData['billNumber'],
         "billType": rowData['billType'],
-        "userId" : localStorage.getItem('ID')
+        "userId": localStorage.getItem('ID')
     }
     console.log(bodyRequest)
     const JWT_TOKEN = localStorage.getItem("JWT")
@@ -129,12 +129,12 @@ function favoriteBill(event, rowData){
 
 function BillsTable(props) {
     const columns = [
-        { title: "Bill Type", field: "billType" },
-        { title: "Bill Number", field: "billNumber" },
-        { title: "Bill Title", field: "title" },
-        { title: "Policy Area", field: "policyArea"},
-        { title: "Introduced On", field: "introducedDate"},
-        { title: "Last Updated", field: "updateDate"},
+        {title: "Bill Type", field: "billType"},
+        {title: "Bill Number", field: "billNumber"},
+        {title: "Bill Title", field: "title"},
+        {title: "Policy Area", field: "policyArea"},
+        {title: "Introduced On", field: "introducedDate"},
+        {title: "Last Updated", field: "updateDate"},
     ]
 
     return (
@@ -161,11 +161,11 @@ function BillsTable(props) {
                         icon: Save,
                         tooltip: 'Favorite Bill',
                         onClick: favoriteBill
-                    },{
+                    }, {
                         icon: Delete,
                         tooltip: 'Delete Favorited Bill',
                         onClick: removeFavoriteBill
-                      }
+                    }
                 ]}
 
             />

@@ -4,13 +4,13 @@ import {Link as RouterLink} from "react-router-dom";
 import Login from "../routes/Login";
 
 function NavigationBar() {
-    let loginRef : any = createRef();
+    let loginRef: any = createRef();
 
     return (
         <AppBar
             position="static"
         >
-            <CssBaseline />
+            <CssBaseline/>
             <Toolbar>
                 <Login ref={loginRef}/>
                 <List

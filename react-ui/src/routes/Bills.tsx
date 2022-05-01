@@ -8,12 +8,13 @@ function Bills() {
     let [page, SetPage] = React.useState(0);
     const pageSize = 1000;
 
-    useEffect( () => {
+    useEffect(() => {
         fetch(`http://cs431-02.cs.rutgers.edu:8080/api/bills/all?pageNumber=${page}&pageSize=${pageSize}`, {
-            headers : {
+            headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
-            }})
+            }
+        })
             .then(res => res.json())
             .then(data => {
                 let newBills = data['content'].map((bill: { [x: string]: string | number | Date; }) => {
@@ -37,7 +38,7 @@ function Bills() {
     }, [page])
 
     if (loading) {
-        return(
+        return (
             <div style={{
                 display: 'flex',
                 justifyContent: 'center',
@@ -47,7 +48,7 @@ function Bills() {
                 flexDirection: 'column',
                 textAlign: 'center'
             }}>
-                <CircularProgress />
+                <CircularProgress/>
             </div>
         )
     } else {
@@ -58,4 +59,5 @@ function Bills() {
         )
     }
 }
+
 export default Bills;

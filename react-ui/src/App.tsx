@@ -5,7 +5,7 @@ import Homepage from "./routes/Homepage";
 function App() {
     return (
         <div>
-            <Homepage />
+            <Homepage/>
         </div>
     )
 }

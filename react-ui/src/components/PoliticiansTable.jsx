@@ -1,7 +1,6 @@
-import React, {useEffect, useState, useCallback} from 'react';
-import {forwardRef} from 'react';
+import React, {forwardRef, useState} from 'react';
 import MaterialTable from "material-table";
-import {point, polygon, booleanPointInPolygon} from "@turf/turf";
+import {booleanPointInPolygon, point} from "@turf/turf";
 
 import AddBox from '@material-ui/icons/AddBox';
 import ArrowDownward from '@material-ui/icons/ArrowDownward';
@@ -22,46 +21,47 @@ import Save from '@material-ui/icons/Save';
 import Delete from '@material-ui/icons/Delete';
 import AddLocationAltIcon from '@mui/icons-material/AddLocationAlt';
 import {colorTheme} from "../theme/colorTheme";
+
 const tableIcons = {
-    Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
-    Check: forwardRef((props, ref) => <Check {...props} ref={ref} />),
-    Clear: forwardRef((props, ref) => <Clear {...props} ref={ref} />),
-    Delete: forwardRef((props, ref) => <DeleteOutline {...props} ref={ref} />),
-    DetailPanel: forwardRef((props, ref) => <ChevronRight {...props} ref={ref} />),
-    Edit: forwardRef((props, ref) => <Edit {...props} ref={ref} />),
-    Export: forwardRef((props, ref) => <SaveAlt {...props} ref={ref} />),
-    Filter: forwardRef((props, ref) => <FilterList {...props} ref={ref} />),
-    FirstPage: forwardRef((props, ref) => <FirstPage {...props} ref={ref} />),
-    LastPage: forwardRef((props, ref) => <LastPage {...props} ref={ref} />),
-    NextPage: forwardRef((props, ref) => <ChevronRight {...props} ref={ref} />),
-    PreviousPage: forwardRef((props, ref) => <ChevronLeft {...props} ref={ref} />),
-    ResetSearch: forwardRef((props, ref) => <Clear {...props} ref={ref} />),
-    Search: forwardRef((props, ref) => <Search {...props} ref={ref} />),
-    SortArrow: forwardRef((props, ref) => <ArrowDownward {...props} ref={ref} />),
-    ThirdStateCheck: forwardRef((props, ref) => <Remove {...props} ref={ref} />),
-    ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />)
+    Add: forwardRef((props, ref) => <AddBox {...props} ref={ref}/>),
+    Check: forwardRef((props, ref) => <Check {...props} ref={ref}/>),
+    Clear: forwardRef((props, ref) => <Clear {...props} ref={ref}/>),
+    Delete: forwardRef((props, ref) => <DeleteOutline {...props} ref={ref}/>),
+    DetailPanel: forwardRef((props, ref) => <ChevronRight {...props} ref={ref}/>),
+    Edit: forwardRef((props, ref) => <Edit {...props} ref={ref}/>),
+    Export: forwardRef((props, ref) => <SaveAlt {...props} ref={ref}/>),
+    Filter: forwardRef((props, ref) => <FilterList {...props} ref={ref}/>),
+    FirstPage: forwardRef((props, ref) => <FirstPage {...props} ref={ref}/>),
+    LastPage: forwardRef((props, ref) => <LastPage {...props} ref={ref}/>),
+    NextPage: forwardRef((props, ref) => <ChevronRight {...props} ref={ref}/>),
+    PreviousPage: forwardRef((props, ref) => <ChevronLeft {...props} ref={ref}/>),
+    ResetSearch: forwardRef((props, ref) => <Clear {...props} ref={ref}/>),
+    Search: forwardRef((props, ref) => <Search {...props} ref={ref}/>),
+    SortArrow: forwardRef((props, ref) => <ArrowDownward {...props} ref={ref}/>),
+    ThirdStateCheck: forwardRef((props, ref) => <Remove {...props} ref={ref}/>),
+    ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref}/>)
 };
 
-function makeFetchDelete(requestOptions){
+function makeFetchDelete(requestOptions) {
     fetch('http://cs431-02.cs.rutgers.edu:8080/favorites/remove/politician', requestOptions)
-    .then(async response => {
-        const validJSON = response.headers.get('content-type')?.includes('application/json');
-        const data = validJSON && await response.json();
-        if (!response.ok) {
-            const error = (data && data.message) || response.status;
-            return Promise.reject(error);
-        }
-        if(response.status === 200){ //might have to change to 201
-            console.log(response)
-            alert("Success, favorited politician removed!")
-        }else{
-            alert("Could Not Removed Favorited Politician")
-        }
-    })
-    .catch(error => {
-        console.error('There was an error!', error);
-        alert("Could Not Favorite Politician")
-    });
+        .then(async response => {
+            const validJSON = response.headers.get('content-type')?.includes('application/json');
+            const data = validJSON && await response.json();
+            if (!response.ok) {
+                const error = (data && data.message) || response.status;
+                return Promise.reject(error);
+            }
+            if (response.status === 200) { //might have to change to 201
+                console.log(response)
+                alert("Success, favorited politician removed!")
+            } else {
+                alert("Could Not Removed Favorited Politician")
+            }
+        })
+        .catch(error => {
+            console.error('There was an error!', error);
+            alert("Could Not Favorite Politician")
+        });
 }
 
 function makeFetch(requestOptions) {
@@ -73,11 +73,11 @@ function makeFetch(requestOptions) {
                 const error = (data && data.message) || response.status;
                 return Promise.reject(error);
             }
-            if(response.status === 201){ //might have to change to 201
+            if (response.status === 201) { //might have to change to 201
                 alert("Success, favorited politician!")
-            }else if(response.status === 409){
+            } else if (response.status === 409) {
                 alert("Politician already favorited!")
-            }else{
+            } else {
                 alert("Could Not Favorite Politician")
             }
         })
@@ -87,10 +87,10 @@ function makeFetch(requestOptions) {
         });
 }
 
-function removePoliticianFavorite(event, rowData){
+function removePoliticianFavorite(event, rowData) {
     const bodyRequest = {
         "politicianId": rowData['id'],
-        "userId" : localStorage.getItem('ID')
+        "userId": localStorage.getItem('ID')
     }
     const JWT_TOKEN = localStorage.getItem("JWT")
     //'Authorization': `Bearer ${JWT_TOKEN}`
@@ -108,7 +108,7 @@ function removePoliticianFavorite(event, rowData){
 function favoritePolitician(event, rowData) {
     const bodyRequest = {
         "politicianId": rowData['id'],
-        "userId" : localStorage.getItem('ID')
+        "userId": localStorage.getItem('ID')
     }
     const JWT_TOKEN = localStorage.getItem("JWT")
     //'Authorization': `Bearer ${JWT_TOKEN}`
@@ -124,7 +124,7 @@ function favoritePolitician(event, rowData) {
 }
 
 function findStateAndDistrict() {
-    navigator.geolocation.getCurrentPosition(function(position) {
+    navigator.geolocation.getCurrentPosition(function (position) {
         const latitude = position.coords.latitude
         const longitude = position.coords.longitude
         console.log([latitude, longitude])
@@ -161,24 +161,24 @@ const PoliticiansTable = (props) => {
     const [, updateState] = React.useState();
     const forceUpdate = React.useCallback(() => updateState({}), []);
     const columns = [
-        { title: "Chamber", field: "chamber" },
-        { title: "State", field: "state" },
-        { title: "District", field: "district"},
-        { title: "Party", field: "party" },
-        { title: "First Name", field: "firstName" },
-        { title: "Last Name", field: "lastName" },
-        { title: "Address", field: "address", filtering: false},
-        { title: "Phone", field: "phone", filtering: false},
-        { title: "Re-Election Date", field: "reelectionDate" },
-        { title: "Contact Link", field: "contactLink", filtering: false},
+        {title: "Chamber", field: "chamber"},
+        {title: "State", field: "state"},
+        {title: "District", field: "district"},
+        {title: "Party", field: "party"},
+        {title: "First Name", field: "firstName"},
+        {title: "Last Name", field: "lastName"},
+        {title: "Address", field: "address", filtering: false},
+        {title: "Phone", field: "phone", filtering: false},
+        {title: "Re-Election Date", field: "reelectionDate"},
+        {title: "Contact Link", field: "contactLink", filtering: false},
     ]
     return (
         <div>
             <MaterialTable
-                title = "United States Congressmen"
+                title="United States Congressmen"
                 icons={tableIcons}
-                columns = {columns}
-                data = {props.politicians}
+                columns={columns}
+                data={props.politicians}
                 localization={{
                     header: {
                         actions: 'Favorite Congressman'
@@ -202,7 +202,7 @@ const PoliticiansTable = (props) => {
                         icon: Delete,
                         tooltip: 'Delete Favorited Politician',
                         onClick: removePoliticianFavorite
-                    },{
+                    }, {
                         icon: AddLocationAltIcon,
                         tooltip: "Get Politicians By Location",
                         position: "toolbar",

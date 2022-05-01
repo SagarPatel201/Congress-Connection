@@ -1,7 +1,7 @@
 import {CircularProgress, Grid} from "@mui/material";
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import React, {useEffect, useState} from "react";
-import { PartyDistPie, BillPolicyDistPie } from "../components/PieChartDistr";
+import {BillPolicyDistPie, PartyDistPie} from "../components/PieChartDistr";
 
 function Analytics() {
     // Load congressman data
@@ -32,12 +32,13 @@ function Analytics() {
     let [page, SetPage] = React.useState(0);
     const pageSize = 1000;
 
-    useEffect( () => {
+    useEffect(() => {
         fetch(`http://cs431-02.cs.rutgers.edu:8080/api/bills/all?pageNumber=${page}&pageSize=${pageSize}`, {
-            headers : {
+            headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
-            }})
+            }
+        })
             .then(res => res.json())
             .then(data => {
                 let newBills = data['content'].map((bill: { [x: string]: string | number | Date; }) => {
@@ -62,8 +63,8 @@ function Analytics() {
     }, [page])
 
 
-    if (error){
-        return(
+    if (error) {
+        return (
             <div style={{
                 display: 'flex',
                 justifyContent: 'center',
@@ -88,11 +89,11 @@ function Analytics() {
                 flexDirection: 'column',
                 textAlign: 'center'
             }}>
-                <CircularProgress />
+                <CircularProgress/>
             </div>
         )
     } else {
-        return(
+        return (
             <div>
                 <Grid
                     container
@@ -120,11 +121,11 @@ function Analytics() {
                         }}>
                             <h3>House of Representatives Party Distribution</h3>
                             <div style={{
-                                height:'55%',
-                                width:'55%'
+                                height: '55%',
+                                width: '55%'
                             }}>
                                 <PartyDistPie
-                                    data = {congressmen.filter(congressman => congressman['chamber'] === "house" && congressman['inOffice'] === true)}
+                                    data={congressmen.filter(congressman => congressman['chamber'] === "house" && congressman['inOffice'] === true)}
                                     label={'House of Representatives Party Distribution'}
                                 />
                             </div>
@@ -140,11 +141,11 @@ function Analytics() {
                         }}>
                             <h3>Senate Party Distribution</h3>
                             <div style={{
-                                height:'55%',
-                                width:'55%'
+                                height: '55%',
+                                width: '55%'
                             }}>
                                 <PartyDistPie
-                                    data = {congressmen.filter(congressman => congressman['chamber'] === "senate" && congressman['inOffice'] === true)}
+                                    data={congressmen.filter(congressman => congressman['chamber'] === "senate" && congressman['inOffice'] === true)}
                                     label={'Senate Party Distribution'}
                                 />
                             </div>
@@ -160,11 +161,11 @@ function Analytics() {
                         }}>
                             <h3>Senators Up for Reelection in 2022 by Party</h3>
                             <div style={{
-                                height:'55%',
-                                width:'55%'
+                                height: '55%',
+                                width: '55%'
                             }}>
                                 <PartyDistPie
-                                    data = {congressmen.filter(congressman => {
+                                    data={congressmen.filter(congressman => {
                                         return congressman['chamber'] === "senate"
                                             && congressman['inOffice'] === true
                                             && congressman['reelectionDate'] === "2022"
@@ -193,25 +194,25 @@ function Analytics() {
                             flexDirection: 'column',
                             textAlign: 'center'
                         }}>
-                        <h3>Bills in the House by Policy Area</h3>
-                        {billsLoading ?
-                            <div style={{
-                                display: 'flex',
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                width: '100vw',
-                                flexDirection: 'column',
-                                textAlign: 'center'
-                            }}>
-                                <CircularProgress />
-                            </div>
-                            :
-                            <div style={{
-                                height:'65%',
-                                width:'65%'
-                            }}>
-                                <BillPolicyDistPie bills={bills.filter(bill => bill['billType'] === "HR")}/>
-                            </div>}
+                            <h3>Bills in the House by Policy Area</h3>
+                            {billsLoading ?
+                                <div style={{
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    width: '100vw',
+                                    flexDirection: 'column',
+                                    textAlign: 'center'
+                                }}>
+                                    <CircularProgress/>
+                                </div>
+                                :
+                                <div style={{
+                                    height: '65%',
+                                    width: '65%'
+                                }}>
+                                    <BillPolicyDistPie bills={bills.filter(bill => bill['billType'] === "HR")}/>
+                                </div>}
                         </div>
                     </Grid>
                     <Grid item xs={6}>
@@ -232,12 +233,12 @@ function Analytics() {
                                     flexDirection: 'column',
                                     textAlign: 'center'
                                 }}>
-                                    <CircularProgress />
+                                    <CircularProgress/>
                                 </div>
                                 :
                                 <div style={{
-                                    height:'65%',
-                                    width:'65%'
+                                    height: '65%',
+                                    width: '65%'
                                 }}>
                                     <BillPolicyDistPie bills={bills.filter(bill => bill['billType'] === "S")}/>
                                 </div>}

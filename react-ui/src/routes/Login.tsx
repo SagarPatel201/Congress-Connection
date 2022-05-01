@@ -39,13 +39,13 @@ const Login = forwardRef((props, ref) => {
                     alignItems: "center",
                 }}
             >
-                <Grid container spacing={2} justifyContent={'center'} >
+                <Grid container spacing={2} justifyContent={'center'}>
                     <TabContext value={tab}>
                         <Grid item xs={12}>
-                            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                            <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
                                 <TabList
-                                    variant = "fullWidth"
-                                    onChange={(event: React.SyntheticEvent, tab : string) => setTab(tab)}
+                                    variant="fullWidth"
+                                    onChange={(event: React.SyntheticEvent, tab: string) => setTab(tab)}
                                 >
                                     <Tab label={'Login'} value={'login'}/>
                                     <Tab label={'Sign Up'} value={'signup'}/>

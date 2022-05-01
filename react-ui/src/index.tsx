@@ -16,18 +16,18 @@ const rootElement = document.getElementById("root");
 render(
     <BrowserRouter>
         <ThemeProvider theme={colorTheme}>
-            <NavigationBar />
+            <NavigationBar/>
             <Routes>
-                <Route path="/" element={<App />} />
-                <Route path="home" element={<Homepage />} />
-                <Route path="favorites" element={<Favorites />} />
-                <Route path="politicians" element={<Politicians />} />
-                <Route path="bills" element={<Bills />} />
-                <Route path="news" element={<News />} />
-                <Route path="logout" element={<App />} />
-                <Route path="analytics" element={<Analytics />} />
+                <Route path="/" element={<App/>}/>
+                <Route path="home" element={<Homepage/>}/>
+                <Route path="favorites" element={<Favorites/>}/>
+                <Route path="politicians" element={<Politicians/>}/>
+                <Route path="bills" element={<Bills/>}/>
+                <Route path="news" element={<News/>}/>
+                <Route path="logout" element={<App/>}/>
+                <Route path="analytics" element={<Analytics/>}/>
             </Routes>
         </ThemeProvider>
     </BrowserRouter>,
-rootElement
+    rootElement
 );

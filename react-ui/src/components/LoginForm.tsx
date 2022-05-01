@@ -23,10 +23,10 @@ const LoginForm = (props: any) => {
             await new Promise((r) => setTimeout(r, 500));
             const requestOptions = {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({
-                    "username" : values.username,
-                    "password" : values.password
+                    "username": values.username,
+                    "password": values.password
                 })
             };
             console.log(values.username)
@@ -39,12 +39,12 @@ const LoginForm = (props: any) => {
                         const error = (data && data.message) || response.status;
                         return Promise.reject(error);
                     }
-                    if(response.status === 200){
+                    if (response.status === 200) {
                         localStorage.setItem('JWT', data['jwt'])
                         localStorage.setItem('ID', data['id'])
                         window.location.reload();
                         props.onSuccess();
-                    }else{
+                    } else {
                         alert("Invalid Login")
                     }
                 })
@@ -53,7 +53,8 @@ const LoginForm = (props: any) => {
                     alert("Invalid Login")
                 });
 
-        }});
+        }
+    });
 
     return (
         <div>
@@ -85,7 +86,7 @@ const LoginForm = (props: any) => {
                             error={formik.touched.password && Boolean(formik.errors.password)}
                         />
                     </Grid>
-                    <Grid item >
+                    <Grid item>
                         <Button
                             type="submit"
                             variant="contained"

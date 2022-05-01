@@ -16,7 +16,7 @@ const validationSchema = yup.object({
         .oneOf([yup.ref('password1'), null], 'Passwords must match')
 });
 
-const SignUpForm = (props : {onSuccess: () => void}) => {
+const SignUpForm = (props: { onSuccess: () => void }) => {
     const formik = useFormik({
         initialValues: {
             username: '',
@@ -29,10 +29,10 @@ const SignUpForm = (props : {onSuccess: () => void}) => {
             alert(JSON.stringify(values, null, 2));
             const requestOptions = {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({
-                    "username" : values.username,
-                    "password" : values.password1
+                    "username": values.username,
+                    "password": values.password1
                 })
             };
             fetch('http://cs431-02.cs.rutgers.edu:8080/login/save', requestOptions)
@@ -43,11 +43,11 @@ const SignUpForm = (props : {onSuccess: () => void}) => {
                         const error = (data && data.message) || response.status;
                         return Promise.reject(error);
                     }
-                    if (response.status === 200){
+                    if (response.status === 200) {
                         props.onSuccess();
-                    } else if (response.status === 409){
+                    } else if (response.status === 409) {
                         alert("Account Already Exists!")
-                    } else{
+                    } else {
                         alert("Account Creation Failed")
                     }
                 })
@@ -68,15 +68,15 @@ const SignUpForm = (props : {onSuccess: () => void}) => {
                     justifyContent={"center"}
                 >
                     <Grid item xs={12}>
-                        <TextField fullWidth label="Username" name="username" onChange={formik.handleChange} />
+                        <TextField fullWidth label="Username" name="username" onChange={formik.handleChange}/>
                     </Grid>
                     <Grid item xs={12}>
-                        <TextField fullWidth label="Password" name="password1" onChange={formik.handleChange} />
+                        <TextField fullWidth label="Password" name="password1" onChange={formik.handleChange}/>
                     </Grid>
                     <Grid item xs={12}>
-                        <TextField fullWidth label="Confirm Password" name="password2" onChange={formik.handleChange} />
+                        <TextField fullWidth label="Confirm Password" name="password2" onChange={formik.handleChange}/>
                     </Grid>
-                    <Grid item >
+                    <Grid item>
                         <Button type="submit" variant="contained" color="primary">Sign Up</Button>
                     </Grid>
                 </Grid>
