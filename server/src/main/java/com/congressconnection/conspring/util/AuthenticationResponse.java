@@ -2,11 +2,12 @@ package com.congressconnection.conspring.util;
 
 import lombok.Getter;
 import lombok.Setter;
+
 import java.util.List;
 
-@Getter @Setter
+@Getter
+@Setter
 public class AuthenticationResponse {
-
     private final String jwt;
     private final long id;
     private final String username;

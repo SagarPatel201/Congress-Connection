@@ -11,5 +11,6 @@ import java.util.Optional;
 @Repository
 public interface BillRepository extends JpaRepository<Bill, Long> {
     Page<Bill> findByBillType(String billType, Pageable pageRequest);
+
     Optional<Bill> findByBillTypeAndBillNumber(String billType, int billNumber);
 }

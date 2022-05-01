@@ -15,7 +15,9 @@ public class FavoriteBillService {
     @Autowired
     FavoriteBillsRepository favoriteBillsRepository;
 
-    public void favoriteBill(FavoriteBills favoriteBill) { favoriteBillsRepository.saveAndFlush(favoriteBill); }
+    public void favoriteBill(FavoriteBills favoriteBill) {
+        favoriteBillsRepository.saveAndFlush(favoriteBill);
+    }
 
     public List<FavoriteBills> getByUserId(long id) {
         return favoriteBillsRepository
@@ -29,5 +31,7 @@ public class FavoriteBillService {
         return favoriteBillsRepository.exists(Example.of(favoriteBill));
     }
 
-    public void removeBill(FavoriteBills favoriteBill) { favoriteBillsRepository.delete(favoriteBill);}
+    public void removeBill(FavoriteBills favoriteBill) {
+        favoriteBillsRepository.delete(favoriteBill);
+    }
 }

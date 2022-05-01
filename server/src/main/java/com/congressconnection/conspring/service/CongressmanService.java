@@ -1,4 +1,5 @@
 package com.congressconnection.conspring.service;
+
 import com.congressconnection.conspring.enums.Chamber;
 import com.congressconnection.conspring.enums.Party;
 import com.congressconnection.conspring.enums.State;

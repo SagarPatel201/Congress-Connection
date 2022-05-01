@@ -12,9 +12,12 @@ import java.util.stream.Collectors;
 
 @Service
 public class FavoritePoliticianService {
-    @Autowired FavoritePoliticianRepository favoritePoliticianRepository;
+    @Autowired
+    FavoritePoliticianRepository favoritePoliticianRepository;
 
-    public void favoritePolitician(FavoritePolitician favoritePolitician) { favoritePoliticianRepository.saveAndFlush(favoritePolitician); }
+    public void favoritePolitician(FavoritePolitician favoritePolitician) {
+        favoritePoliticianRepository.saveAndFlush(favoritePolitician);
+    }
 
     public List<FavoritePolitician> getByUserId(long id) {
         return favoritePoliticianRepository

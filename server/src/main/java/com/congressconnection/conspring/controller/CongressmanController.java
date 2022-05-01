@@ -36,9 +36,9 @@ public class CongressmanController {
                 .stream()
                 .filter(congressman ->
                         Objects.equals(congressman.getState(), state.orElse(congressman.getState())) &&
-                        Objects.equals(congressman.getParty(), party.orElse(congressman.getParty())) &&
-                        Objects.equals(congressman.getChamber(), chamber.orElse(congressman.getChamber())) &&
-                        congressman.getDistrict() == district.orElse(congressman.getDistrict()))
+                                Objects.equals(congressman.getParty(), party.orElse(congressman.getParty())) &&
+                                Objects.equals(congressman.getChamber(), chamber.orElse(congressman.getChamber())) &&
+                                congressman.getDistrict() == district.orElse(congressman.getDistrict()))
                 .collect(Collectors.toList());
         return new ResponseEntity<>(congressmen, HttpStatus.OK);
     }

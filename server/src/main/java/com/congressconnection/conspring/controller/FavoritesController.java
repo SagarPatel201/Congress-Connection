@@ -21,18 +21,21 @@ import java.util.List;
 @CrossOrigin
 @RequestMapping("/favorites")
 public class FavoritesController {
-
-    @Autowired FavoriteBillService favoriteBillService;
-    @Autowired FavoritePoliticianService favoritePoliticiansService;
-    @Autowired CongressmanService politicianService;
-    @Autowired BillService billService;
+    @Autowired
+    FavoriteBillService favoriteBillService;
+    @Autowired
+    FavoritePoliticianService favoritePoliticiansService;
+    @Autowired
+    CongressmanService politicianService;
+    @Autowired
+    BillService billService;
 
     @GetMapping("/politicians/{id}")
     @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     public ResponseEntity<?> getFavoritePoliticians(@PathVariable long id) {
         List<FavoritePolitician> favoritePoliticianList = favoritePoliticiansService.getByUserId(id);
         List<Congressman> politicianList = new ArrayList<>();
-        for(int i = 0; i < favoritePoliticianList.size(); i++) {
+        for (int i = 0; i < favoritePoliticianList.size(); i++) {
             politicianList.add(politicianService.getById(favoritePoliticianList.get(i).getPoliticianId()));
         }
         return new ResponseEntity<>(politicianList, HttpStatus.OK);
@@ -43,7 +46,7 @@ public class FavoritesController {
     public ResponseEntity<?> getFavoriteBills(@PathVariable long id) {
         List<FavoriteBills> favoriteBillsList = favoriteBillService.getByUserId(id);
         List<Bill> billList = new ArrayList<>();
-        for(int i = 0; i < favoriteBillsList.size(); i++) {
+        for (int i = 0; i < favoriteBillsList.size(); i++) {
             billList.add(billService.getByBillNumber(favoriteBillsList.get(i).getBillNumber(),
                     favoriteBillsList.get(i).getBillType()));
         }
@@ -54,8 +57,9 @@ public class FavoritesController {
     @PostMapping("/politician")
     @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     public ResponseEntity<?> favoritePolitician(@RequestBody FavoritePolitician favoritePolitician) {
-        if(favoritePolitician.emptyParam()) return new ResponseEntity<>("Missing a parameter in body", HttpStatus.BAD_REQUEST);
-        if(favoritePoliticiansService.isFavorite(favoritePolitician))
+        if (favoritePolitician.emptyParam())
+            return new ResponseEntity<>("Missing a parameter in body", HttpStatus.BAD_REQUEST);
+        if (favoritePoliticiansService.isFavorite(favoritePolitician))
             return new ResponseEntity<>("Already a favorite politician", HttpStatus.CONFLICT);
 
         favoritePoliticiansService.favoritePolitician(favoritePolitician);
@@ -65,8 +69,9 @@ public class FavoritesController {
     @PostMapping("/bill")
     @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     public ResponseEntity<?> favoriteBill(@RequestBody FavoriteBills favoriteBill) {
-        if(favoriteBill.emptyParam()) return new ResponseEntity<>("Missing a parameter in body", HttpStatus.BAD_REQUEST);
-        if(favoriteBillService.isFavorite(favoriteBill))
+        if (favoriteBill.emptyParam())
+            return new ResponseEntity<>("Missing a parameter in body", HttpStatus.BAD_REQUEST);
+        if (favoriteBillService.isFavorite(favoriteBill))
             return new ResponseEntity<>("Already a favorite bill", HttpStatus.CONFLICT);
 
         favoriteBillService.favoriteBill(favoriteBill);
@@ -76,7 +81,7 @@ public class FavoritesController {
     @DeleteMapping("/remove/bill")
     @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     public ResponseEntity<?> removeFavoriteBill(@RequestBody FavoriteBills favoriteBill) {
-        if(!favoriteBillService.isFavorite(favoriteBill))
+        if (!favoriteBillService.isFavorite(favoriteBill))
             return new ResponseEntity<>("ERROR: Unable to unfavorite a bill that is not favorited", HttpStatus.BAD_REQUEST);
 
         favoriteBillService.removeBill(favoriteBill);
@@ -86,7 +91,7 @@ public class FavoritesController {
     @DeleteMapping("/remove/politician")
     @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     public ResponseEntity<?> removeFavoritePolitician(@RequestBody FavoritePolitician favoritePolitician) {
-        if(!favoritePoliticiansService.isFavorite(favoritePolitician))
+        if (!favoritePoliticiansService.isFavorite(favoritePolitician))
             return new ResponseEntity<>("ERROR: Unable to unfavorite a politician that is not favorited", HttpStatus.BAD_REQUEST);
 
         favoritePoliticiansService.removePolitician(favoritePolitician);

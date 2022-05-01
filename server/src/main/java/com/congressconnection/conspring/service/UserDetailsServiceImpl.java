@@ -1,8 +1,8 @@
 package com.congressconnection.conspring.service;
 
-import com.congressconnection.conspring.model.UserDetailsImpl;
 import com.congressconnection.conspring.model.User;
 import com.congressconnection.conspring.repository.UserRepository;
+import com.congressconnection.conspring.util.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -13,7 +13,6 @@ import java.util.Optional;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
-
     @Autowired
     UserRepository userRepository;
 
@@ -24,7 +23,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         return user.map(UserDetailsImpl::new).get();
     }
 
-    public List<User> getAllUsers() { return userRepository.findAll(); }
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
 
     public User getUserById(long id) {
         return userRepository.findById(id).orElse(null);
@@ -34,11 +35,17 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         return userRepository.existsByUsername(username);
     }
 
-    public void saveUser(User user) { userRepository.save(user); }
+    public void saveUser(User user) {
+        userRepository.save(user);
+    }
 
-    public void activateUser(User user) { userRepository.saveAndFlush(user); }
+    public void activateUser(User user) {
+        userRepository.saveAndFlush(user);
+    }
 
-    public void disableUser(User user) { userRepository.saveAndFlush(user); }
+    public void disableUser(User user) {
+        userRepository.saveAndFlush(user);
+    }
 
     public void updateUser(User user) {
         userRepository.saveAndFlush(user);
