@@ -49,23 +49,43 @@ function NavigationBar() {
                         </Link>
                     </ListItem>
                 </List>
-                <Button
-                    sx={{
-                        backgroundColor: "white",
-                        color: "primary.dark",
-                        justifySelf: "flex-end",
-                        "&:hover": {
+                {localStorage.getItem("JWT") === null ?
+                    <Button
+                        sx={{
                             backgroundColor: "white",
                             color: "primary.dark",
-                        },
-                    }}
-                    variant={'contained'}
-                    onClick={() => {
-                        loginRef.current.openLogin();
-                    }}
-                >
-                    Login
-                </Button>
+                            justifySelf: "flex-end",
+                            "&:hover": {
+                                backgroundColor: "white",
+                                color: "primary.dark",
+                            },
+                        }}
+                        variant={'contained'}
+                        onClick={() => {
+                            loginRef.current.openLogin();
+                        }}
+                    >
+                        Login
+                    </Button>
+                    :
+                    <Button
+                        sx={{
+                            backgroundColor: "white",
+                            color: "primary.dark",
+                            justifySelf: "flex-end",
+                            "&:hover": {
+                                backgroundColor: "white",
+                                color: "primary.dark",
+                            },
+                        }}
+                        variant={'contained'}
+                        onClick={() => {
+                            localStorage.removeItem("JWT");
+                            window.location.reload();
+                        }}
+                    >
+                        Logout
+                    </Button>}
             </Toolbar>
         </AppBar>
     )
