@@ -1,6 +1,7 @@
 import React, {useEffect, useState, useCallback} from 'react';
 import {forwardRef} from 'react';
 import MaterialTable from "material-table";
+import {point, polygon, booleanPointInPolygon} from "@turf/turf";
 
 import AddBox from '@material-ui/icons/AddBox';
 import ArrowDownward from '@material-ui/icons/ArrowDownward';
@@ -45,7 +46,6 @@ function makeFetchDelete(requestOptions){
     .then(async response => {
         const validJSON = response.headers.get('content-type')?.includes('application/json');
         const data = validJSON && await response.json();
-        console.log(data)
         if (!response.ok) {
             const error = (data && data.message) || response.status;
             return Promise.reject(error);
@@ -68,18 +68,15 @@ function makeFetch(requestOptions) {
         .then(async response => {
             const validJSON = response.headers.get('content-type')?.includes('application/json');
             const data = validJSON && await response.json();
-            console.log(data)
             if (!response.ok) {
                 const error = (data && data.message) || response.status;
                 return Promise.reject(error);
             }
             if(response.status === 201){ //might have to change to 201
-                console.log(response)
                 alert("Success, favorited politician!")
             }else if(response.status === 409){
                 alert("Politician already favorited!")
             }else{
-                console.log(response.status)
                 alert("Could Not Favorite Politician")
             }
         })
@@ -90,14 +87,11 @@ function makeFetch(requestOptions) {
 }
 
 function removePoliticianFavorite(event, rowData){
-    console.log(rowData['id'])
     const bodyRequest = {
         "politicianId": rowData['id'],
         "userId" : localStorage.getItem('ID')
     }
-    console.log(bodyRequest)
     const JWT_TOKEN = localStorage.getItem("JWT")
-    console.log(JWT_TOKEN)
     //'Authorization': `Bearer ${JWT_TOKEN}`
     const requestOptions = {
         method: 'DELETE',
@@ -115,10 +109,8 @@ function favoritePolitician(event, rowData) {
         "politicianId": rowData['id'],
         "userId" : localStorage.getItem('ID')
     }
-    console.log(bodyRequest)
     const JWT_TOKEN = localStorage.getItem("JWT")
     //'Authorization': `Bearer ${JWT_TOKEN}`
-    console.log(JWT_TOKEN)
     const requestOptions = {
         method: 'POST',
         headers: {
@@ -130,21 +122,43 @@ function favoritePolitician(event, rowData) {
     makeFetch(requestOptions)
 }
 
-function onClick(){
-    console.log("Clicked")
-
+function findStateAndDistrict() {
     navigator.geolocation.getCurrentPosition(function(position) {
         const latitude = position.coords.latitude
         const longitude = position.coords.longitude
-        alert(latitude + " " + longitude)
-      });
+        console.log([latitude, longitude])
+
+        const location = point([longitude, latitude]);
+        console.log(location)
+        // Get the state and district from the latitude and longitude
+        let states = ['AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY']
+        for (const state of states) {
+            let stateUrl = `https://theunitedstates.io/districts/states/${state}/shape.geojson`
+            fetch(stateUrl)
+                .then(response => response.json())
+                .then(statePolygon => {
+                    if (booleanPointInPolygon(location, statePolygon)) {
+                        // Found the state. Now find the district.
+                        for (let district = 1; district < 70; district++) {
+                            let districtUrl = `https://theunitedstates.io/districts/cds/2012/${state}-${district}/shape.geojson`
+                            fetch(districtUrl)
+                                .then(response2 => response2.json())
+                                .then(districtPolygon => {
+                                    if (booleanPointInPolygon(location, districtPolygon)) {
+                                        alert("You are in " + state + " district " + district)
+                                    }
+                                })
+                        }
+                    }
+                })
+        }
+    })
 }
 
 const PoliticiansTable = (props) => {
     const [text, setText] = useState("")
     const [, updateState] = React.useState();
     const forceUpdate = React.useCallback(() => updateState({}), []);
-    console.log(text)
     const columns = [
         { title: "Chamber", field: "chamber" },
         { title: "State", field: "state" },
@@ -180,18 +194,14 @@ const PoliticiansTable = (props) => {
                         onClick: favoritePolitician
                     },
                     {
-                      icon: Delete,
-                      tooltip: 'Delete Favorited Politician',
-                      onClick: removePoliticianFavorite
+                        icon: Delete,
+                        tooltip: 'Delete Favorited Politician',
+                        onClick: removePoliticianFavorite
                     },{
                         icon: AddLocationAltIcon,
                         tooltip: "Get Politicians By Location",
                         position: "toolbar",
-                        onClick: () =>{
-                            alert("Clicked")
-                            forceUpdate();
-                            setText("NJ")
-                        }
+                        onClick: findStateAndDistrict
                     }
                 ]}
             >
