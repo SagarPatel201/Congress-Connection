@@ -9,10 +9,10 @@ export const colorTheme = createTheme({
             contrastText: '#ffffff'
         },
         secondary: {
-            main: '#ff9800',
-            light: '#a4a4a4',
-            dark: '#494949',
-            contrastText: '#ffffff',
+            main: '#e0e0e0',
+            light: '#ffffff',
+            dark: '#aeaeae',
+            contrastText: '#000000',
         },
     },
     typography: {
