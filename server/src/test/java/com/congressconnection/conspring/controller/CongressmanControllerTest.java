@@ -2,7 +2,6 @@ package com.congressconnection.conspring.controller;
 
 import com.congressconnection.conspring.enums.Chamber;
 import com.congressconnection.conspring.enums.State;
-import com.congressconnection.conspring.model.Bill;
 import com.congressconnection.conspring.model.Congressman;
 import com.congressconnection.conspring.service.CongressmanService;
 import org.junit.gen5.api.BeforeEach;
@@ -13,17 +12,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Function;
 
 import static org.junit.gen5.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
