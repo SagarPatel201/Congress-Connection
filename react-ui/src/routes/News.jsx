@@ -59,50 +59,50 @@ function News() {
                     hasMore={page < 5}
                     initialLoad={true}
                     loader={<CircularProgress key={0}/>}
+                >
+                    <Grid
+                        className={'news-grid'}
+                        container
+                        direction="row"
+                        justify="center"
+                        alignItems="center"
+                        spacing={4}
+                        padding={4}
                     >
-                        <Grid
-                            className={'news-grid'}
-                            container
-                            direction="row"
-                            justify="center"
-                            alignItems="center"
-                            spacing={4}
-                            padding={4}
-                        >
-                            {articles.map(article => (
-                                <Grid className="news-row" item xs={12} sm={2} key={article._id}>
-                                    <Card
-                                        className={"article-card"}
-                                        style={{
-                                            maxWidth: 300,
-                                            maxHeight: 400,
-                                        }}
-                                    >
-                                        <CardMedia
-                                            component={'img'}
-                                            src={article.multimedia?.[0]?.url ? `https://nytimes.com/${article.multimedia[0].url}` : 'https://upload.wikimedia.org/wikipedia/commons/4/40/New_York_Times_logo_variation.jpg'}
-                                        />
-                                        <CardContent>
-                                            <Typography variant="h6">
-                                                <a href={article.web_url}>
-                                                    {article.headline.main}
-                                                </a>
-                                            </Typography>
-                                            <Typography variant="subtitle2">
-                                                {article.byline.original}
-                                            </Typography>
-                                            <Typography variant="p">
-                                                {article.snippet}
-                                            </Typography>
-                                        </CardContent>
-                                    </Card>
-                                </Grid>
-                            ))}
-                        </Grid>
-                        </InfiniteScroll>
-                    </div>
-                        );
-                    }
-                }
+                        {articles.map(article => (
+                            <Grid className="news-row" item xs={12} sm={2} key={article._id}>
+                                <Card
+                                    className={"article-card"}
+                                    style={{
+                                        maxWidth: 300,
+                                        maxHeight: 400,
+                                    }}
+                                >
+                                    <CardMedia
+                                        component={'img'}
+                                        src={article.multimedia?.[0]?.url ? `https://nytimes.com/${article.multimedia[0].url}` : 'https://upload.wikimedia.org/wikipedia/commons/4/40/New_York_Times_logo_variation.jpg'}
+                                    />
+                                    <CardContent>
+                                        <Typography variant="h6">
+                                            <a href={article.web_url}>
+                                                {article.headline.main}
+                                            </a>
+                                        </Typography>
+                                        <Typography variant="subtitle2">
+                                            {article.byline.original}
+                                        </Typography>
+                                        <Typography variant="p">
+                                            {article.snippet}
+                                        </Typography>
+                                    </CardContent>
+                                </Card>
+                            </Grid>
+                        ))}
+                    </Grid>
+                </InfiniteScroll>
+            </div>
+        );
+    }
+}
 
-                export default News;
+export default News;
