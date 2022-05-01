@@ -119,11 +119,24 @@ public class BillControllerTest {
         this.controller = new BillController();
     }
 
-
     @Test
     public void test_getAllBills(){
         when(service.getAllPaginated(1,1)).thenReturn(page);
         ResponseEntity<Page<Bill>> responseEntity = controller.getBills(1,1);
+        assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
+    }
+
+    @Test
+    public void test_getBillsInHouse(){
+        when(service.getByBillType("HR", 1, 1)).thenReturn(page);
+        ResponseEntity<Page<Bill>> responseEntity = controller.getBillsInHouse(1,1);
+        assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
+    }
+
+    @Test
+    public void test_getBillsInSenate(){
+        when(service.getByBillType("S", 1, 1)).thenReturn(page);
+        ResponseEntity<Page<Bill>> responseEntity = controller.getBillsInSenate(1,1);
         assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
     }
 
