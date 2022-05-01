@@ -199,7 +199,6 @@ function Analytics() {
                                 display: 'flex',
                                 justifyContent: 'center',
                                 alignItems: 'center',
-                                height: '100vh',
                                 width: '100vw',
                                 flexDirection: 'column',
                                 textAlign: 'center'
@@ -229,7 +228,6 @@ function Analytics() {
                                     display: 'flex',
                                     justifyContent: 'center',
                                     alignItems: 'center',
-                                    height: '100vh',
                                     width: '100vw',
                                     flexDirection: 'column',
                                     textAlign: 'center'
