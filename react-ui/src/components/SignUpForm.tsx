@@ -26,7 +26,6 @@ const SignUpForm = (props: { onSuccess: () => void }) => {
         validationSchema,
         onSubmit: async (values: { username: any; password1: any; }) => {
             await new Promise((r) => setTimeout(r, 500));
-            alert(JSON.stringify(values, null, 2));
             const requestOptions = {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
@@ -71,10 +70,10 @@ const SignUpForm = (props: { onSuccess: () => void }) => {
                         <TextField fullWidth label="Username" name="username" onChange={formik.handleChange}/>
                     </Grid>
                     <Grid item xs={12}>
-                        <TextField fullWidth label="Password" name="password1" onChange={formik.handleChange}/>
+                        <TextField fullWidth label="Password" type="password" name="password1" onChange={formik.handleChange}/>
                     </Grid>
                     <Grid item xs={12}>
-                        <TextField fullWidth label="Confirm Password" name="password2" onChange={formik.handleChange}/>
+                        <TextField fullWidth label="Confirm Password" type="password" name="password2" onChange={formik.handleChange}/>
                     </Grid>
                     <Grid item>
                         <Button type="submit" variant="contained" color="primary">Sign Up</Button>
