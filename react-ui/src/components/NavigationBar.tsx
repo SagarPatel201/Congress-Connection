@@ -1,10 +1,15 @@
-import {createRef} from "react";
+import {createRef, useEffect, useState} from "react";
 import {AppBar, Button, CssBaseline, Link, List, ListItem, Stack, Toolbar} from "@mui/material"
 import {Link as RouterLink} from "react-router-dom";
 import Login from "../routes/Login";
 
 function NavigationBar() {
     let loginRef: any = createRef();
+    const [isAdmin, setIsAdmin] = useState(false);
+
+    useEffect(() => {
+        setIsAdmin(localStorage.getItem("ROLES") === "ROLE_ADMIN");
+    }, [isAdmin]);
 
     return (
         <AppBar
@@ -48,8 +53,15 @@ function NavigationBar() {
                             Favorites
                         </Link>
                     </ListItem>
+                    {isAdmin && (
+                        <ListItem>
+                            <Link component={RouterLink} to={"/Users"}>
+                                Users
+                            </Link>
+                        </ListItem>
+                    )}
                 </List>
-                {localStorage.getItem("JWT") === null ?
+                {localStorage.getItem("JWT") === null ? (
                     <Button
                         sx={{
                             backgroundColor: "white",
@@ -64,10 +76,8 @@ function NavigationBar() {
                         onClick={() => {
                             loginRef.current.openLogin();
                         }}
-                    >
-                        Login
-                    </Button>
-                    :
+                    > Login </Button>
+                ) : (
                     <Button
                         sx={{
                             backgroundColor: "white",
@@ -82,11 +92,11 @@ function NavigationBar() {
                         onClick={() => {
                             localStorage.removeItem("JWT");
                             localStorage.removeItem("ID")
+                            localStorage.removeItem("ROLES")
                             window.location.reload();
                         }}
-                    >
-                        Logout
-                    </Button>}
+                    > Logout </Button>
+                )}
             </Toolbar>
         </AppBar>
     )

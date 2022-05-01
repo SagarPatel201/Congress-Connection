@@ -1,5 +1,7 @@
 import {forwardRef} from "react";
 import MaterialTable from "material-table";
+import {colorTheme} from "../theme/colorTheme";
+
 import AddBox from '@material-ui/icons/AddBox';
 import ArrowDownward from '@material-ui/icons/ArrowDownward';
 import Check from '@material-ui/icons/Check';
@@ -17,7 +19,6 @@ import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
 import Save from '@material-ui/icons/Save';
 import Delete from '@material-ui/icons/Delete';
-import {colorTheme} from "../theme/colorTheme";
 
 const tableIcons = {
     Add: forwardRef((props, ref) => <AddBox {...props} ref={ref}/>),
