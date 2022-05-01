@@ -42,6 +42,7 @@ const LoginForm = (props: any) => {
                     if(response.status === 200){
                         localStorage.setItem('JWT', data['jwt'])
                         localStorage.setItem('ID', data['id'])
+                        window.location.reload();
                         props.onSuccess();
                     }else{
                         alert("Invalid Login")
