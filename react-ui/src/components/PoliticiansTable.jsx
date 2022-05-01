@@ -21,6 +21,7 @@ import ViewColumn from '@material-ui/icons/ViewColumn';
 import Save from '@material-ui/icons/Save';
 import Delete from '@material-ui/icons/Delete';
 import AddLocationAltIcon from '@mui/icons-material/AddLocationAlt';
+import {colorTheme} from "../theme/colorTheme";
 const tableIcons = {
     Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
     Check: forwardRef((props, ref) => <Check {...props} ref={ref} />),
@@ -186,6 +187,10 @@ const PoliticiansTable = (props) => {
                 options={{
                     searchText: text,
                     filtering: true,
+                    headerStyle: {
+                        backgroundColor: colorTheme.palette.primary.dark,
+                        color: colorTheme.palette.primary.contrastText,
+                    },
                 }}
                 actions={[
                     {

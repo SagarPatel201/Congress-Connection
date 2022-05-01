@@ -17,6 +17,7 @@ import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
 import Save from '@material-ui/icons/Save';
 import Delete from '@material-ui/icons/Delete';
+import {colorTheme} from "../theme/colorTheme";
 
 const tableIcons = {
     Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
@@ -139,9 +140,9 @@ function BillsTable(props) {
     return (
         <div>
             <MaterialTable
+                columns={columns}
                 title="United States Bills"
                 icons={tableIcons}
-                columns={columns}
                 data={props.bills}
                 localization={{
                     header: {
@@ -150,6 +151,10 @@ function BillsTable(props) {
                 }}
                 options={{
                     filtering: true,
+                    headerStyle: {
+                        backgroundColor: colorTheme.palette.primary.dark,
+                        color: colorTheme.palette.primary.contrastText,
+                    },
                 }}
                 actions={[
                     {
