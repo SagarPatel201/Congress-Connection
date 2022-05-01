@@ -93,7 +93,7 @@ public class UserController {
         User userToActivate = userDetailsService.getUserById(id);
         if(userToActivate.isActive()) { return new ResponseEntity<>("Unable to activate user: USER ACTIVE", HttpStatus.BAD_REQUEST); }
         userToActivate.setActive(true);
-        userDetailsService.disableUser(userToActivate);
+        userDetailsService.activateUser(userToActivate);
         return new ResponseEntity<>("Successfully disabled user: " + userToActivate, HttpStatus.OK);
     }
 
