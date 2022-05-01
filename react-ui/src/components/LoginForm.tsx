@@ -29,8 +29,6 @@ const LoginForm = (props: any) => {
                     "password": values.password
                 })
             };
-            console.log(values.username)
-            console.log(values.password)
             fetch('http://cs431-02.cs.rutgers.edu:8080/login/authenticate', requestOptions)
                 .then(async response => {
                     const validJSON = response.headers.get('content-type')?.includes('application/json');
