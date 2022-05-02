@@ -1,0 +1,297 @@
+{
+	"info": {
+		"_postman_id": "b020d94d-d25b-4b47-a192-1a24a7bbc0f1",
+		"name": "Testing Bill/Politician API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Test Congressmen API All Congressmen",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Get all congressmen', function(){\r",
+							"    pm.response.to.have.status(200);\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwt}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://cs431-02.cs.rutgers.edu:8080/api/congressmen",
+					"protocol": "http",
+					"host": [
+						"cs431-02",
+						"cs",
+						"rutgers",
+						"edu"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"congressmen"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Test Bills API 1st Page of Bills",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Get all bills on first page', function(){\r",
+							"    pm.response.to.have.status(200);\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://cs431-02.cs.rutgers.edu:8080/api/bills/all?pageNumber=0&pageSize=100",
+					"protocol": "http",
+					"host": [
+						"cs431-02",
+						"cs",
+						"rutgers",
+						"edu"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"bills",
+						"all"
+					],
+					"query": [
+						{
+							"key": "pageNumber",
+							"value": "0"
+						},
+						{
+							"key": "pageSize",
+							"value": "100"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Test Bills API 2nd Page of Bills",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Get all bills on second page', function(){\r",
+							"    pm.response.to.have.status(200);\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://cs431-02.cs.rutgers.edu:8080/api/bills/all?pageNumber=1&pageSize=100",
+					"protocol": "http",
+					"host": [
+						"cs431-02",
+						"cs",
+						"rutgers",
+						"edu"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"bills",
+						"all"
+					],
+					"query": [
+						{
+							"key": "pageNumber",
+							"value": "1"
+						},
+						{
+							"key": "pageSize",
+							"value": "100"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Test Congressmen API (Param filters)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Get all congressmen with parameter filters', function(){\r",
+							"    pm.response.to.have.status(200);\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://cs431-02.cs.rutgers.edu:8080/api/congressmen?state=NJ&chamber=house&district=1",
+					"protocol": "http",
+					"host": [
+						"cs431-02",
+						"cs",
+						"rutgers",
+						"edu"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"congressmen"
+					],
+					"query": [
+						{
+							"key": "state",
+							"value": "NJ"
+						},
+						{
+							"key": "chamber",
+							"value": "house"
+						},
+						{
+							"key": "district",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Test Bill API Bills in House",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Get all bills in house', function(){\r",
+							"    pm.response.to.have.status(200);\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://cs431-02.cs.rutgers.edu:8080/api/bills/house?pageNumber=0&pageSize=100",
+					"protocol": "http",
+					"host": [
+						"cs431-02",
+						"cs",
+						"rutgers",
+						"edu"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"bills",
+						"house"
+					],
+					"query": [
+						{
+							"key": "pageNumber",
+							"value": "0"
+						},
+						{
+							"key": "pageSize",
+							"value": "100"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Test Bill API Bills in Senate",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Get all bills in senate', function(){\r",
+							"    pm.response.to.have.status(200);\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://cs431-02.cs.rutgers.edu:8080/api/bills/senate?pageNumber=0&pageSize=100",
+					"protocol": "http",
+					"host": [
+						"cs431-02",
+						"cs",
+						"rutgers",
+						"edu"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"bills",
+						"senate"
+					],
+					"query": [
+						{
+							"key": "pageNumber",
+							"value": "0"
+						},
+						{
+							"key": "pageSize",
+							"value": "100"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

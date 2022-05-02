@@ -1,0 +1,210 @@
+{
+	"info": {
+		"_postman_id": "56f4b021-6f6c-4c8b-bd83-93cf047460e9",
+		"name": "Testing Registering a New User",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "POST Register new USER",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Successfully register new user', function(){\r",
+							"    pm.response.to.have.status(200);\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"let date = Date.now();\r",
+							"let testuser = 'user' + date;\r",
+							"pm.collectionVariables.set('testuser', testuser);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"username\": \"{{testuser}}\",\r\n\t\"password\": \"password\"\r\n}"
+				},
+				"url": {
+					"raw": "http://cs431-02.cs.rutgers.edu:8080/login/save",
+					"protocol": "http",
+					"host": [
+						"cs431-02",
+						"cs",
+						"rutgers",
+						"edu"
+					],
+					"port": "8080",
+					"path": [
+						"login",
+						"save"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST Login as USER",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Login as recently created user', function(){\r",
+							"    pm.response.to.have.status(200);\r",
+							"})\r",
+							"pm.test('Has a jwt', function(){\r",
+							"    const data = pm.response.json();\r",
+							"    pm.collectionVariables.set('jwt', data.jwt);\r",
+							"    pm.collectionVariables.set('id', data.id);\r",
+							"    return 'jwt' in data;\r",
+							"})\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"username\": \"{{testuser}}\",\r\n\t\"password\": \"password\"\r\n}"
+				},
+				"url": {
+					"raw": "http://cs431-02.cs.rutgers.edu:8080/login/authenticate",
+					"protocol": "http",
+					"host": [
+						"cs431-02",
+						"cs",
+						"rutgers",
+						"edu"
+					],
+					"port": "8080",
+					"path": [
+						"login",
+						"authenticate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET User details",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Get Logged in User Details', function(){\r",
+							"    pm.response.to.have.status(200);\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwt}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://cs431-02.cs.rutgers.edu:8080/login/user/{{id}}",
+					"protocol": "http",
+					"host": [
+						"cs431-02",
+						"cs",
+						"rutgers",
+						"edu"
+					],
+					"port": "8080",
+					"path": [
+						"login",
+						"user",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "jwt",
+			"value": "null",
+			"type": "string"
+		},
+		{
+			"key": "id",
+			"value": "null",
+			"type": "string"
+		},
+		{
+			"key": "testuser",
+			"value": "null",
+			"type": "string"
+		}
+	]
+}

@@ -1,0 +1,567 @@
+{
+	"info": {
+		"_postman_id": "bc330d0c-6cbe-46c8-b9d2-c6acdcbc3911",
+		"name": "Testing Favorites API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Authenticate/Login as User (chris2)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Authenticate as user', function(){\r",
+							"    pm.response.to.have.status(200);\r",
+							"})\r",
+							"pm.test('Has a jwt', function(){\r",
+							"    const data = pm.response.json();\r",
+							"    pm.collectionVariables.set('jwt', data.jwt);\r",
+							"    pm.collectionVariables.set('id', data.id);\r",
+							"    return 'jwt' in data;\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"username\": \"{{username}}\",\r\n\t\"password\": \"{{password}}\"\r\n}"
+				},
+				"url": {
+					"raw": "http://cs431-02.cs.rutgers.edu:8080/login/authenticate",
+					"protocol": "http",
+					"host": [
+						"cs431-02",
+						"cs",
+						"rutgers",
+						"edu"
+					],
+					"port": "8080",
+					"path": [
+						"login",
+						"authenticate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Favorite politicians",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Get user favorite politicians', function(){\r",
+							"    pm.response.to.have.status(200);\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwt}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://cs431-02.cs.rutgers.edu:8080/favorites/politicians/{{id}}",
+					"protocol": "http",
+					"host": [
+						"cs431-02",
+						"cs",
+						"rutgers",
+						"edu"
+					],
+					"port": "8080",
+					"path": [
+						"favorites",
+						"politicians",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Favorite bills",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Get user favorite politicians', function(){\r",
+							"    pm.response.to.have.status(200);\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwt}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://cs431-02.cs.rutgers.edu:8080/favorites/bills/{{id}}",
+					"protocol": "http",
+					"host": [
+						"cs431-02",
+						"cs",
+						"rutgers",
+						"edu"
+					],
+					"port": "8080",
+					"path": [
+						"favorites",
+						"bills",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Favorite a politician",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Favoriting a politician', function(){\r",
+							"    pm.response.to.have.status(201);\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwt}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"politicianId\": \"AK0\",\r\n\t\"userId\": \"{{id}}\"\r\n}"
+				},
+				"url": {
+					"raw": "http://cs431-02.cs.rutgers.edu:8080/favorites/politician",
+					"protocol": "http",
+					"host": [
+						"cs431-02",
+						"cs",
+						"rutgers",
+						"edu"
+					],
+					"port": "8080",
+					"path": [
+						"favorites",
+						"politician"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Favorite a bill",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Favoriting a bill', function(){\r",
+							"    pm.response.to.have.status(201);\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwt}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"billNumber\": \"1\",\r\n\t\"billType\": \"HR\",\r\n    \"userId\": \"{{id}}\"\r\n}"
+				},
+				"url": {
+					"raw": "http://cs431-02.cs.rutgers.edu:8080/favorites/bill",
+					"protocol": "http",
+					"host": [
+						"cs431-02",
+						"cs",
+						"rutgers",
+						"edu"
+					],
+					"port": "8080",
+					"path": [
+						"favorites",
+						"bill"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Favorite politicians (updated)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Get user favorite politicians', function(){\r",
+							"    pm.response.to.have.status(200);\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwt}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://cs431-02.cs.rutgers.edu:8080/favorites/politicians/{{id}}",
+					"protocol": "http",
+					"host": [
+						"cs431-02",
+						"cs",
+						"rutgers",
+						"edu"
+					],
+					"port": "8080",
+					"path": [
+						"favorites",
+						"politicians",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Favorite bills (updated)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Get user favorite politicians', function(){\r",
+							"    pm.response.to.have.status(200);\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwt}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://cs431-02.cs.rutgers.edu:8080/favorites/bills/{{id}}",
+					"protocol": "http",
+					"host": [
+						"cs431-02",
+						"cs",
+						"rutgers",
+						"edu"
+					],
+					"port": "8080",
+					"path": [
+						"favorites",
+						"bills",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Removing a Favorite Politician",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Favoriting a politician', function(){\r",
+							"    pm.response.to.have.status(200);\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwt}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"politicianId\": \"AK0\",\r\n\t\"userId\": \"{{id}}\"\r\n}"
+				},
+				"url": {
+					"raw": "http://cs431-02.cs.rutgers.edu:8080/favorites/remove/politician",
+					"protocol": "http",
+					"host": [
+						"cs431-02",
+						"cs",
+						"rutgers",
+						"edu"
+					],
+					"port": "8080",
+					"path": [
+						"favorites",
+						"remove",
+						"politician"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Removing a Favorite Bill",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Favoriting a bill', function(){\r",
+							"    pm.response.to.have.status(200);\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwt}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"billNumber\": \"1\",\r\n\t\"billType\": \"HR\",\r\n    \"userId\": \"{{id}}\"\r\n}"
+				},
+				"url": {
+					"raw": "http://cs431-02.cs.rutgers.edu:8080/favorites/remove/bill",
+					"protocol": "http",
+					"host": [
+						"cs431-02",
+						"cs",
+						"rutgers",
+						"edu"
+					],
+					"port": "8080",
+					"path": [
+						"favorites",
+						"remove",
+						"bill"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Favorite politicians (updated after removing favorite)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Get user favorite politicians', function(){\r",
+							"    pm.response.to.have.status(200);\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwt}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://cs431-02.cs.rutgers.edu:8080/favorites/politicians/{{id}}",
+					"protocol": "http",
+					"host": [
+						"cs431-02",
+						"cs",
+						"rutgers",
+						"edu"
+					],
+					"port": "8080",
+					"path": [
+						"favorites",
+						"politicians",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Favorite bills (updated after removing favorite)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Get user favorite politicians', function(){\r",
+							"    pm.response.to.have.status(200);\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwt}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://cs431-02.cs.rutgers.edu:8080/favorites/bills/{{id}}",
+					"protocol": "http",
+					"host": [
+						"cs431-02",
+						"cs",
+						"rutgers",
+						"edu"
+					],
+					"port": "8080",
+					"path": [
+						"favorites",
+						"bills",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "username",
+			"value": "chris2",
+			"type": "string"
+		},
+		{
+			"key": "password",
+			"value": "password",
+			"type": "string"
+		},
+		{
+			"key": "jwt",
+			"value": "null",
+			"type": "string"
+		},
+		{
+			"key": "id",
+			"value": "null",
+			"type": "string"
+		}
+	]
+}
