@@ -94,7 +94,7 @@ public class UserController {
         if(userToActivate.isActive()) { return new ResponseEntity<>("Unable to activate user: USER ACTIVE", HttpStatus.BAD_REQUEST); }
         userToActivate.setActive(true);
         userDetailsService.activateUser(userToActivate);
-        return new ResponseEntity<>("Successfully disabled user: " + userToActivate, HttpStatus.OK);
+        return new ResponseEntity<>("Successfully activated user: " + userToActivate, HttpStatus.OK);
     }
 
     @PutMapping("/user/deactivate/{id}")
